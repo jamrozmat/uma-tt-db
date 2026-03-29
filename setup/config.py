@@ -69,3 +69,16 @@ def lang_load(app_path):
     except Exception as e:
         print(e)
         return False
+
+def load_db_path(app_path):
+    config_file = Path(app_path)/"config.ini"
+    config = configparser.ConfigParser()
+    try:
+        config.read(config_file, encoding="utf-8")
+        if config.has_option('APP', 'database'):
+            db_path = config.get('APP', 'database')
+            return db_path
+        return False
+    except Exception as e:
+        print(e)
+        return False

@@ -12,12 +12,13 @@ from setup.folders_mng import create_folders
 from setup.config import create_config
 from setup.json import create_json
 from setup.lang import lang_check
+from database.db_manager import create_db
 
 def start():
     system = check_os()
     app_path = create_folders(system, __app_name__)
     create_config(app_path)
-    #initialize_db
+    create_db(app_path)
     create_json(app_path)
     lang = lang_check(app_path)
     root = tk.Tk()
