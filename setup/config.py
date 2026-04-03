@@ -58,6 +58,7 @@ def lang_update(app_path, lang):
         config.write(f)
 
 def lang_load(app_path):
+    """Return the language code ('en') from the config file."""
     config_file = Path(app_path)/"config.ini"
     config = configparser.ConfigParser()
     try:
@@ -71,6 +72,7 @@ def lang_load(app_path):
         return False
 
 def load_db_path(app_path):
+    """Return the path to the uma.db database from the config file."""
     config_file = Path(app_path)/"config.ini"
     config = configparser.ConfigParser()
     try:
