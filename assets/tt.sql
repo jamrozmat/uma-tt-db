@@ -4,10 +4,10 @@ CREATE TABLE Distances (
     Distance_Name VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE Series (
-    Serie_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    Serie_Date DATE,
-    Serie_Time TIME
+CREATE TABLE Trials (
+    Trial_ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Trial_Date DATE,
+    Trial_Time TIME
 );
 
 CREATE TABLE Uma (
@@ -20,13 +20,13 @@ CREATE TABLE Uma (
 
 CREATE TABLE Results (
     Result_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-    Serie_ID INTEGER,
+    Trial_ID INTEGER,
     Uma_ID INTEGER,
     Position SMALLINT NOT NULL,
     Score INTEGER,
     Distance_ID INTEGER,
     FOREIGN KEY (Uma_ID) REFERENCES Uma(Uma_ID),
-    FOREIGN KEY (Serie_ID) REFERENCES Series(Serie_ID),
+    FOREIGN KEY (Trial_ID) REFERENCES Trials(Trial_ID),
     FOREIGN KEY (Distance_ID) REFERENCES Distances(Distance_ID)
 );
 

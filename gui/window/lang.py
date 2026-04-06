@@ -13,25 +13,28 @@ def ask_lang(app_path):
     window = tk.Frame(root)
     window.grid()
 
+    lang_code = None
+
     ask = tk.Label(window, text="Choose your language:\nWybierz język:")
     ask.grid(pady=20)
 
-    lang = {
-        "English": "eng",
+    LANG_MAPPING = {
+        "English": "en",
         "Polski": "pl",
         }
     choose = ttk.Combobox(
         window,
-        values=list(lang.keys()),
+        values=list(LANG_MAPPING.keys()),
         state="readonly",
         width=10,
     )
-    choose.current()
+    choose.current(0)
     choose.grid(padx=20, pady=4)
 
     def _save():
+        nonlocal lang_code
         chosen_lang = choose.get()
-        lang_code = lang.get(chosen_lang)
+        lang_code = LANG_MAPPING.get(chosen_lang)
         lang_update(app_path, lang_code)
         root.destroy()
 
@@ -39,3 +42,5 @@ def ask_lang(app_path):
     btn.grid(pady=2)
 
     root.mainloop()
+
+    return lang_code

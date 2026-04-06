@@ -17,7 +17,6 @@ class MainWindow(tk.Toplevel):
 
         self.app_path = app_path
         self.lang = lang
-        print(">>> WYŚWIETLONO MENU GŁÓWNE <<<")
         self.i18n = I18n(language=lang)
 
         #self.icon = tk.PhotoImage(file=f'{BASE}/assets/icons/carats.png')
@@ -32,7 +31,7 @@ class MainWindow(tk.Toplevel):
         # please contact the program's author.
         logo = tk.Label(
             self, 
-            text="Want to help and see your artwork here?\nContact the developer!",
+            text=f"{self.i18n.t("main_menu.info")}",
             fg="gray")
         logo.pack(side="top", anchor="n", pady=10)
 
@@ -133,7 +132,7 @@ class MainWindow(tk.Toplevel):
 
     def _add_uma(self, lang):
         from gui.window.add_uma import AddUma
-        uma_window = AddUma(master=self, lang=self.lang)
+        uma_window = AddUma(master=self, lang=self.lang, app_path=self.app_path)
         uma_window.focus_set()
         uma_window.grab_set()
 
@@ -145,7 +144,7 @@ class MainWindow(tk.Toplevel):
 
     def _add_results(self, app_path):
         from gui.window.add_results import AddResults
-        result_window = AddResults(master=self, app_path=app_path)
+        result_window = AddResults(master=self, app_path=app_path, lang=self.lang)
         result_window.focus_set()
         result_window.grab_set()
 
@@ -156,16 +155,22 @@ class MainWindow(tk.Toplevel):
         show_results_window.grab_set()
 
     def _set_actual_team(self, app_path):
+        pass
+    """
         from gui.window.set_team import SetActualTeam
         set_team_window = SetActualTeam(master=self, app_path=app_path)
         set_team_window.focus_set()
         set_team_window.grab_set()
+    """
 
     def _help(self):
+        pass
+    """
         from gui.window.help import Help
         help_window = Help(master=self)
         help_window.focus_set()
         help_window.grab_set()
+    """
 
     def _close_program(self):
         close()

@@ -19,10 +19,17 @@ def pragma(app_path):
 def create_db(app_path):
     SQL = resource_path(f'uma-tt-db/assets/tt.sql')
     sql_script = Path(SQL).read_text(encoding="utf-8")
-    con = sqlite3.connect("uma.db")
+
+    db_path = Path(app_path)/"uma.db"
+    db_path.touch()
+
+    con = sqlite3.connect(db_path)
     cur = con.cursor()
+
     cur.execute("PRAGMA user_version")
-    version = cur.fetchone()[0]
+    version = cur.fetchone()
+    version = version[0]
+
     if version < 1:
         cur.executescript(sql_script)
         cur.execute("PRAGMA user_version = 1")

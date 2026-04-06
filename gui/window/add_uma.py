@@ -10,19 +10,21 @@ from database.add_uma import add_uma
 from database.get_distances import get_distances
 
 class AddUma(tk.Toplevel):
-    def __init__(self, lang, master=None):
+    def __init__(self, lang, app_path, master=None):
         super().__init__(master=master)
         self.master = master
-        self.i18n = I18n
+        self.i18n = I18n(language=lang)
+        self.app_path = app_path
 
-        self.title(f"{self.i18n.t("add_uma.add_uma")}")
-        self.geometry("250x260")
+        title_text = f"{self.i18n.t("uma_add.add_uma")}"
+        self.title(title_text)
+        self.geometry("250x280")
         self.resizable(width=False, height=False)
 
         self._gui()
 
     def _gui(self):
-        info_text = f"{self.i18n.t("add_uma.info")}"
+        info_text = f"{self.i18n.t("uma_add.info")}"
         self.info_label = tk.Label(
             self,
             text=info_text,
@@ -37,7 +39,7 @@ class AddUma(tk.Toplevel):
 
         self.name_text_label = tk.Label(
             self.new_uma_frame,
-            text=f"{self.i18n.t("add_uma.name")}: ",
+            text=f"{self.i18n.t("uma_add.name")}: ",
             font=("Helvetica", 10),
         )
         self.name_text_label.grid(row=0, column=0, sticky="w")
@@ -46,11 +48,11 @@ class AddUma(tk.Toplevel):
 
         self.rank_text_label = tk.Label(
             self.new_uma_frame,
-            text=f"{self.i18n.t("add_uma.rank")}: ",
+            text=f"{self.i18n.t("uma_add.rank")}: ",
             font=("Helvetica", 10),
         )
         self.rank_text_label.grid(row=1, column=0, sticky="w")
-        ToolTip(self.rank_text_label, self.i18n.t("add_uma.rank_info"))
+        ToolTip(self.rank_text_label, self.i18n.t("uma_add.rank_info"))
         self.rank_entry = tk.Entry(self.new_uma_frame, width=20)
         self.rank_entry.grid(row=1, column=1)
 
@@ -61,13 +63,13 @@ class AddUma(tk.Toplevel):
         self.distance_frame.grid()
         self.distance_text_label = tk.Label(
             self.distance_frame,
-            text=f"{self.i18n.t("add_uma.dist")}: ",
+            text=f"{self.i18n.t("uma_add.dist")}: ",
             font=("Helvetica", 10),
         )
         self.distance_text_label.grid(row=0, column=0)
 
-        self.distance_data = get_distances()
-        distance_name = [row[0] for row in self.distance_data]
+        self.distance_data = get_distances(self.app_path)
+        distance_name = [row[1] for row in self.distance_data]
         self.distance = ttk.Combobox(
             self.distance_frame,
             values=distance_name,
@@ -81,7 +83,7 @@ class AddUma(tk.Toplevel):
 
         self.exit = tk.Button(
             self.btn_frame,
-            text=f"{self.i18n.t("add_uma.exit")}",
+            text=f"{self.i18n.t("uma_add.exit")}",
             font=("Helvetica", 10),
             relief="solid",
             borderwidth=1,
@@ -91,7 +93,7 @@ class AddUma(tk.Toplevel):
 
         self.add_uma_btn = tk.Button(
             self.btn_frame,
-            text=f"{self.i18n.t("add_uma.add_uma")}",
+            text=f"{self.i18n.t("uma_add.add_uma")}",
             font=("Helvetica", 10),
             relief="solid",
             borderwidth=2,
@@ -106,8 +108,8 @@ class AddUma(tk.Toplevel):
         self.destroy()
 
     def _add_uma(self):
-        name = self.name_entry.get()
-        rank = self.rank_entry.get()
+        name = self.name_entry.get().strip()
+        rank = self.rank_entry.get().strip()
         distance = self.distance.get()
         id_distance = None
         for row in self.distance_data:
@@ -125,7 +127,7 @@ class AddUma(tk.Toplevel):
             messagebox.showwarning("Error!", "Ocena musi być liczbą!")
             return
 
-        success, error = add_uma(name, rank, id_distance)
+        success, error = add_uma(name, rank, id_distance, self.app_path)
         if not success:
             messagebox.showerror("Błąd bazy danych", f"Nie udało się zapisać:\n{error}")
         else:

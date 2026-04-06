@@ -18,7 +18,7 @@ class AddTrial(tk.Toplevel):
         self.app_path = app_path
         self.i18n = I18n(language=lang)
         self.title(f"{self.i18n.t("add_trial.title")}")
-        self.geometry("280x220")
+        self.geometry("300x220")
         self.resizable(width=False, height=False)
 
         self.remember_date_val = tk.BooleanVar(value=remember_date_load(self.app_path))
@@ -132,7 +132,7 @@ class AddTrial(tk.Toplevel):
             messagebox.showwarning("Error!", "Wypełnij wszystkie pola!")
             return
 
-        success, error = add_trial_to_db(date, hour)
+        success, error = add_trial_to_db(date, hour, self.app_path)
         if not success:
             messagebox.showerror("Database Error", f"{error}")
         else:
@@ -146,7 +146,7 @@ class AddTrial(tk.Toplevel):
             self.date_entry.focus_set()
 
     def _add_date(self):
-        today = dt.datetime.strftime('%Y-%m-%d')
+        today = dt.datetime.now().isoformat()
         self.date_entry.delete(0, tk.END)
         self.date_entry.insert(0, today)
 

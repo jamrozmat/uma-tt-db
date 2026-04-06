@@ -1,1 +1,61 @@
-{}
+{
+    "main_menu": {
+        "info": "Chcesz pomóc i ujrzeć tutaj swój artwork? Skontaktuj się z deweloperem!",
+        "pragma": "PRAGMA bazy danych:",
+        "pragma_info": "Przedstawia wersję bazy danych.\nWięcej informacji w oknie 'Pomoc'.",
+        "add_uma": "Dodaj Uma",
+        "add_uma_info": "Dodaj nową Uma do bazy danych",
+        "add_trial": "Dodaj serię",
+        "add_trial_info": "Dodaj nową serię wyścigu Team Trials",
+        "add_results": "Dodaj wynik",
+        "add_results_info": "Dodaj wyniki wyścigu Team Trials",
+        "show_results": "Wyświetl wyniki",
+        "show_results_info": "Wyświetl rozbudowane wyniki Twoich Uma",
+        "choose_team": "Ustaw skład",
+        "choose_team_info": "Ustaw obecny skład Twojej drużyny TT,\naby przyspieszyć wprowadzanie wyników.",
+        "help": "Pomoc",
+        "help_info": "Przeczytaj obsługę programu.",
+        "author": "Autor",
+        "version": "Wersja programu",
+        "exit": "Wyjście",
+        "exit_info": "Zamknij program."
+    },
+    "uma_add": {
+        "add_uma": "Dodaj Uma",
+        "info": "Wprowadź Uma do bazy danych,\nwprowadzając jej imię i ocenę\noraz przypisując jej dystans.",
+        "name": "Imię",
+        "rank": "Ocena",
+        "rank_info": "Podaj ocenę liczbową bez przecinków (16150),\nnie ranking (UG1)!",
+        "dist": "Wybierz dystans",
+        "exit": "Wróć do menu"
+    },
+    "add_trial": {
+        "title": "Dodawanie serii wyścigu",
+        "info": "Wprowadź serię wyścigu do bazy danych,\npodając jej datę i godzinę.",
+        "date": "Wprowadź datę",
+        "date_info": "Wprowadź datę w formacie: YYYY-MM-DD",
+        "today": "Kliknij, by dodać dzisiejszą datę.",
+        "hour": "Wprowadź godzinę",
+        "hour_info": "Wprowadź godzinę w formacie: HH:MM:SS",
+        "check": "Nie czyść pola daty",
+        "check_info": "Zaznacz, by nie czyścić pola daty po dodaniu serii.\nOpcja ta zostanie zapamiętana.",
+        "exit": "Wróć do menu",
+        "add_trial_btn": "Dodaj serię"
+    },
+    "score_win": {
+        "title": "Wyniki",
+        "uma_list": "Lista Uma",
+        "rodzaje": "Dystanse",
+        "choose": "Wybierz coś...",
+        "dotyczy": "Dotyczy aktualnego składu",
+        "back": "Wyjdź do menu",
+        "series": "Serie wyścigu:"
+    },
+    "add_results": {
+        "title": "Dodawanie wyników",
+        "info": "Wprowadź pozycje Uma z danej serii wyścigów.",
+        "help": "Wybierz serię Team Trials z rozwijanej listy,\nznajdującej się na prawo, a następnie\nwprowadź w postaci liczb całkowitych zajęte miejsca.",
+        "exit": "Wróć do menu",
+        "save": "Zapisz wyniki"
+    }
+}

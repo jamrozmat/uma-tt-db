@@ -1,1 +1,61 @@
-{}
+{
+    "main_menu": {
+        "info": "Want to help and see your artwork here?\nContact the developer!",
+        "pragma": "Database PRAGMA:",
+        "pragma_info": "Displays the database version.\nMore information in the 'Help' window.",
+        "add_uma": "Add Uma",
+        "add_uma_info": "Add a new Uma to the database",
+        "add_trial": "Add Series",
+        "add_trial_info": "Add a new Team Trials race series",
+        "add_results": "Add Results",
+        "add_results_info": "Add Team Trials race results",
+        "show_results": "View Results",
+        "show_results_info": "View detailed results of your Uma",
+        "choose_team": "Set Lineup",
+        "choose_team_info": "Set your current TT team lineup\nto speed up result entry.",
+        "help": "Help",
+        "help_info": "Read the user guide.",
+        "author": "Author",
+        "version": "Program Version",
+        "exit": "Exit",
+        "exit_info": "Close the program."
+    },
+    "uma_add": {
+        "add_uma": "Add Uma",
+        "info": "Add an Uma to the database by entering\nher name and rank, and assigning\na distance category.",
+        "name": "Name",
+        "rank": "Rank",
+        "rank_info": "Give a numeric score without commas (16150),\nnot a rank (UG1)!",
+        "dist": "Select distance",
+        "exit": "Back to menu"
+    },
+    "add_trial": {
+        "title": "Add Race Series",
+        "info": "Add a race series to the database by entering\nits date and time.",
+        "date": "Enter date",
+        "date_info": "Enter date in the format: YYYY-MM-DD",
+        "today": "Click to add today's date.",
+        "hour": "Enter time",
+        "hour_info": "Enter time in the format: HH:MM:SS",
+        "check": "Don't clear Date field",
+        "check_info": "Check this to keep the date field filled\nafter adding a series.\nThis setting will be remembered.",
+        "exit": "Back to menu",
+        "add_trial_btn": "Add serie"
+    },
+    "score_win": {
+        "title": "Results",
+        "uma_list": "Uma List",
+        "rodzaje": "Distances",
+        "choose": "Select option...",
+        "dotyczy": "Current squad only",
+        "back": "Back to menu",
+        "series": "Trial series"
+    },
+    "add_results": {
+        "title": "Add Results",
+        "info": "Enter the Uma positions for the given Team Trials.",
+        "help": "Select the Team Trials series from\nthe dropdown list on the right,\nthen enter the finishing positions as integers.",
+        "exit": "Back to menu",
+        "save": "Add Results"
+    }
+}

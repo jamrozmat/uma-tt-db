@@ -6,7 +6,8 @@ from gui.window.lang import ask_lang
 
 def lang_check(app_path):
     if not lang_set(app_path):
-        ask_lang(app_path)
+        lang = ask_lang(app_path)
+        return lang
     else:
         lang = lang_load(app_path)
         return lang
