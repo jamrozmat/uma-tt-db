@@ -30,6 +30,8 @@
         "help_info": "Przeczytaj obsługę programu.",
         "author": "Autor",
         "version": "Wersja programu",
+        "license_info": "Kliknij, by przeczytać licencję na oficjalnej stronie.",
+        "github_info": "Kliknij, by odwiedzić stronę programu.",
         "exit": "Wyjście",
         "exit_info": "Zamknij program."
     },
@@ -78,5 +80,19 @@
         "info": "Przypisz swoje Uma do konkretnego dystansu,\nwybierając je z list.",
         "exit":"Wróć do menu",
         "save": "Zapisz skład"
+    },
+    "help": {
+        "title": "Pomoc",
+        "previous": "Poprzednia",
+        "next": "Następna",
+        "welcome": "Witaj w programie UmaTT-db!\nZapoznaj się z tą pomocą, by komfortowo korzystać z programu.",
+        "welcome2": "Naciśnij przycisk 'Następna >', by kontynuować.",
+        "authors": "Autor programu:\nMateusz Jamróz\n\nWspółtwórcy:\n\nAutorzy grafik:\n\n",
+        "adding_uma": "Dodawanie Uma",
+        "first": "Pierwszą rzeczą powinno być dodanie nowej Uma do bazy danych.",
+        "first2": "Aby to zrobić, kliknij 'Dodaj Uma' w menu głównym.",
+        "first3": "Wprowadź jej imię, ocenę\noraz przypisz dystans z rozwijanej listy.",
+        "first4": "Następnie naciśnij 'Dodaj Uma'.",
+        "first5": "Uma zostanie zapisana w bazie danych.\nZostanie jej przypisane unikalne ID, dzięki czemu będzie traktowana\njako unikalna postać. Jeżeli będziesz chciał wprowadzić lepszą wersję\ntej samej Uma, po prostu wprowadź ją jako nową."
     }
 }

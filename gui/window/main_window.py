@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import tkinter as tk
+import webbrowser
 
 from core.i18n import I18n
 from core.tooltip import ToolTip
@@ -108,16 +109,61 @@ class MainWindow(tk.Toplevel):
             text=f"{self.i18n.t("main_menu.help")}",
             relief="raised",
             borderwidth=1,
-            command=self._help,
+            command=lambda: self._help(lang=self.lang),
         )
         help_button.config(width=20, cursor="hand2")
         ToolTip(help_button, f"{self.i18n.t("main_menu.help_info")}")
         help_button.pack(pady=20)
 
         # BOTTOM INFO LABEL
-        info_label_text = f"{self.i18n.t("main_menu.author")}: {__author__}  {self.i18n.t("main_menu.version")}: {__version__}"
-        info_label = tk.Label(self, text=info_label_text)
-        info_label.pack(side="bottom", anchor="sw", padx=10)
+        info_label = tk.Label(
+            self,
+            relief="solid",
+            borderwidth=1,
+            bg="snow")
+        info_label.pack(fill="x", side="bottom", anchor="sw")
+
+        author_lbl = tk.Label(
+            info_label,
+            text=f"{self.i18n.t("main_menu.author")}: {__author__}",
+            anchor="w",
+            bg="snow",
+        )
+        author_lbl.pack(side="left", padx=5)
+
+        version_lbl = tk.Label(
+            info_label,
+            text=f"{self.i18n.t("main_menu.version")}: {__version__}",
+            anchor="w",
+            bg="snow",
+        )
+        version_lbl.pack(side="left", padx=5)
+
+        html_license = "http://www.gnu.org/licenses/"
+        license_lbl = tk.Label(
+            info_label,
+            text="GNU GPL v3.0",
+            anchor="w",
+            bg="snow",
+            cursor="hand2",
+        )
+        ToolTip(license_lbl, f"{self.i18n.t("main_menu.license_info")}")
+        license_lbl.bind("<Button-1>", lambda event: self._open_url(html_license))
+        license_lbl.pack(side="left", padx=5)
+
+        github_url = "https://github.com/jamrozmat/uma-tt-db"
+        github_lbl = tk.Label(
+            info_label,
+            text="uma-tt-db Github",
+            relief="groove",
+            borderwidth=1,
+            anchor="w",
+            bg="gainsboro",
+            cursor="hand2",
+        )
+        ToolTip(github_lbl, f"{self.i18n.t("main_menu.github_info")}")
+        github_lbl.bind("<Button-1>", lambda event: self._open_url(github_url))
+        github_lbl.pack(side="right")
 
         exit_btn = tk.Button(
             self,
@@ -127,7 +173,7 @@ class MainWindow(tk.Toplevel):
             command=self._close_program,
         )
         exit_btn.config(width=20)
-        exit_btn.pack(side="bottom")
+        exit_btn.pack(side="bottom", pady=5)
         ToolTip(exit_btn, f"{self.i18n.t("main_menu.exit_info")}")
 
     def _add_uma(self, lang):
@@ -160,14 +206,14 @@ class MainWindow(tk.Toplevel):
         set_team_window.focus_set()
         set_team_window.grab_set()
 
-    def _help(self):
-        pass
-    """
+    def _help(self, lang):
         from gui.window.help import Help
-        help_window = Help(master=self)
+        help_window = Help(master=self, lang=self.lang)
         help_window.focus_set()
         help_window.grab_set()
-    """
+
+    def _open_url(self, html):
+        webbrowser.open(html)
 
     def _close_program(self):
         close()
