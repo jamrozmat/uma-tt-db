@@ -118,18 +118,18 @@ class AddUma(tk.Toplevel):
                 break
 
         if name == "" or rank == "" or id_distance is None:
-            messagebox.showwarning("Error!", "Wypełnij wszystkie pola!")
+            messagebox.showwarning(f"{self.i18n.t("m_b.error")}!", f"{self.i18n.t("m_b.all_entries")}!")
             return
 
         try:
             rank = int(rank)
         except ValueError:
-            messagebox.showwarning("Error!", "Ocena musi być liczbą!")
+            messagebox.showwarning(f"{self.i18n.t("m_b.error")}!", f"{self.i18n.t("m_b.integer")}!")
             return
 
         success, error = add_uma(name, rank, id_distance, self.app_path)
         if not success:
-            messagebox.showerror("Błąd bazy danych", f"Nie udało się zapisać:\n{error}")
+            messagebox.showerror(f"{self.i18n.t("m_b.db_error")}", f"{self.i18n.t("m_b.cant_save")}:\n{error}")
         else:
             pass
 

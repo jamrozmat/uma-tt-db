@@ -175,7 +175,7 @@ class ShowResults(tk.Toplevel):
                 labels, positions = load_uma_position(uma_id, self.app_path)
 
                 if not labels:
-                    messagebox.showwarning("Error", f"No data for Uma: {uma_id}")
+                    messagebox.showwarning(f"{self.i18n.t("m_b.error")}", f"{self.i18n.t("m_b.no_data_for_uma")}: {uma_id}")
                     return
 
                 dataset = {str(uma_name): positions}

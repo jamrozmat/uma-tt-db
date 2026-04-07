@@ -1,11 +1,24 @@
 {
+    "m_b": {
+        "error": "Error",
+        "all_entries": "Fill in all fields",
+        "integer": "The rank must be a number",
+        "db_error": "Database error",
+        "cant_save": "Failed to save",
+        "no_data": "No data",
+        "no_trial": "No Trial found",
+        "select_trial": "Select a Team Trial series from the list",
+        "no_data_for_uma": "No data for Uma",
+        "format_error": "Format error",
+        "incorrect_hour_format": "Incorrect hour format"
+    },
     "main_menu": {
         "info": "Want to help and see your artwork here?\nContact the developer!",
         "pragma": "Database PRAGMA:",
         "pragma_info": "Displays the database version.\nMore information in the 'Help' window.",
         "add_uma": "Add Uma",
         "add_uma_info": "Add a new Uma to the database",
-        "add_trial": "Add Series",
+        "add_trial": "Add Team Trials",
         "add_trial_info": "Add a new Team Trials race series",
         "add_results": "Add Results",
         "add_results_info": "Add Team Trials race results",
@@ -30,17 +43,19 @@
         "exit": "Back to menu"
     },
     "add_trial": {
-        "title": "Add Race Series",
-        "info": "Add a race series to the database by entering\nits date and time.",
+        "title": "Add Team Trials",
+        "info": "Add a Team Trials to the database by entering\nits date and time.",
         "date": "Enter date",
-        "date_info": "Enter date in the format: YYYY-MM-DD",
+        "date_info": "Enter date in the format: YYYY-MM-DD\nNo need to enter dashes;\nthey are added automatically.",
+        "today_btn": "Today",
         "today": "Click to add today's date.",
         "hour": "Enter time",
-        "hour_info": "Enter time in the format: HH:MM:SS",
+        "hour_info": "Enter time in the format: HH:MM:SS\nNo need to enter colons;\nthey are added automatically.",
+        "hour_format_btn": "Select time format.\nTo select 'PM', type 'p' after the hour.\nTo select 'AM', remove 'P' from 'PM'.\nThis setting will be saved.",
         "check": "Don't clear Date field",
-        "check_info": "Check this to keep the date field filled\nafter adding a series.\nThis setting will be remembered.",
+        "check_info": "Check this to keep the date field filled\nafter adding a trials.\nThis setting will be remembered.",
         "exit": "Back to menu",
-        "add_trial_btn": "Add serie"
+        "add_trial_btn": "Add Trial"
     },
     "score_win": {
         "title": "Results",

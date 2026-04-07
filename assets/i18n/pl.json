@@ -1,4 +1,17 @@
 {
+    "m_b": {
+        "error": "Błąd!",
+        "all_entries": "Wypełnij wszystkie pola",
+        "integer": "Ocena musi być liczbą",
+        "db_error": "Błąd bazy danych",
+        "cant_save": "Nie udało się zapisać",
+        "no_data": "Brak danych",
+        "no_trial": "Brak serii",
+        "select_trial": "Wybierz serię Team Trial z listy",
+        "no_data_for_uma": "Brak danych dla Uma",
+        "format_error": "Błąd formatu",
+        "incorrect_hour_format": "Niepoprawny format godziny"
+    },
     "main_menu": {
         "info": "Chcesz pomóc i ujrzeć tutaj swój artwork?\nSkontaktuj się z deweloperem!",
         "pragma": "PRAGMA bazy danych:",
@@ -33,10 +46,12 @@
         "title": "Dodawanie serii wyścigu",
         "info": "Wprowadź serię wyścigu do bazy danych,\npodając jej datę i godzinę.",
         "date": "Wprowadź datę",
-        "date_info": "Wprowadź datę w formacie: YYYY-MM-DD",
+        "date_info": "Wprowadź datę w formacie: YYYY-MM-DD\nNie musisz wprowadzać myślników,\nzostaną dodane automatycznie.",
+        "today_btn": "Dzisiaj",
         "today": "Kliknij, by dodać dzisiejszą datę.",
         "hour": "Wprowadź godzinę",
-        "hour_info": "Wprowadź godzinę w formacie: HH:MM:SS",
+        "hour_info": "Wprowadź godzinę w formacie: HH:MM:SS\nNie musisz wprowadzać dwukropków,\nzostaną dodane automatycznie.",
+        "hour_format_btn": "Wybierz format godziny.\nAby wybrać 'PM', wpisz 'p' po godzinie.\nAby wybrać 'AM', usuń 'P' w 'PM'.\nUstawienie to zostanie zapamiętane.",
         "check": "Nie czyść pola daty",
         "check_info": "Zaznacz, by nie czyścić pola daty po dodaniu serii.\nOpcja ta zostanie zapamiętana.",
         "exit": "Wróć do menu",

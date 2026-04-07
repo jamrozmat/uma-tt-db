@@ -8,7 +8,9 @@ from core.tooltip import ToolTip
 from core.i18n import I18n
 from database.add_trial import add_trial_to_db
 from setup.config_vals import remember_date_load
+from setup.config_vals import load_hour_format
 from setup.config_vals import trial_autoload
+from setup.config_vals import save_hour_format
 
 
 class AddTrial(tk.Toplevel):
@@ -22,6 +24,7 @@ class AddTrial(tk.Toplevel):
         self.resizable(width=False, height=False)
 
         self.remember_date_val = tk.BooleanVar(value=remember_date_load(self.app_path))
+        self.is_24h = load_hour_format(self.app_path)
 
         self._gui()
 
@@ -49,10 +52,10 @@ class AddTrial(tk.Toplevel):
 
         self.date_today_btn = tk.Button(
             self.entries_frame,
-            text="T",
+            text=f"{self.i18n.t("add_trial.today_btn")}",
             relief="solid",
             borderwidth=1,
-            width=1,
+            width=5,
             height=1,
             command=self._add_date,
         )
@@ -76,6 +79,18 @@ class AddTrial(tk.Toplevel):
         )
         ToolTip(self.hour_text_label, f"{self.i18n.t("add_trial.hour_info")}")
         self.hour_text_label.grid(row=1, column=0, sticky="w", pady=2)
+
+        self.hour_format_btn = tk.Button(
+            self.entries_frame,
+            text="24H" if self.is_24h else "AM/PM",
+            relief="solid",
+            borderwidth=1,
+            width=5,
+            height=1,
+            command=self._toggle_time_format,
+        )
+        ToolTip(self.hour_format_btn, f"{self.i18n.t("add_trial.hour_format_btn")}")
+        self.hour_format_btn.grid(row=1, column=1)
 
         self.time_var = tk.StringVar()
         self.trace_time = self.time_var.trace_add("write", self._format_time)
@@ -124,17 +139,59 @@ class AddTrial(tk.Toplevel):
         self.btn_row.columnconfigure(0, weight=1)
         self.btn_row.columnconfigure(1, weight=1)
 
-    def _add_trial(self, event=None):
-        date = self.date_entry.get()
-        hour = self.hour_entry.get()
-
-        if not date or not hour:
-            messagebox.showwarning("Error!", "Wypełnij wszystkie pola!")
+    def _toggle_time_format(self):
+        current_val = self.time_var.get().strip()
+        if not current_val:
+            self.is_24h = not self.is_24h
+            self.hour_format_btn.config(text="24H" if self.is_24h else "AM/PM")
+            save_hour_format(self.is_24h, self.app_path)
             return
 
-        success, error = add_trial_to_db(date, hour, self.app_path)
+        try:
+            if self.is_24h:
+                time_set = dt.datetime.strptime(current_val, "%H:%M:%S")
+                new_time = time_set.strftime("%I:%M:%S %p")
+                self.is_24h = False
+                self.hour_format_btn.config(text="AM/PM")
+            else:
+                time_set = dt.datetime.strptime(current_val, "%I:%M:%S %p")
+                new_time = time_set.strftime("%H:%M:%S")
+                self.is_24h = True
+                self.hour_format_btn.config(text="24H")
+
+            self.time_var.trace_remove("write", self.trace_time)
+            self.time_var.set(new_time)
+            self.trace_time = self.time_var.trace_add("write", self._format_time)
+        except ValueError:
+            self.is_24h = not self.is_24h
+            self.hour_format_btn.config(text="24H" if self.is_24h else "AM/PM")
+
+        save_hour_format(self.is_24h, self.app_path)
+
+    def _add_trial(self, event=None):
+        date = self.date_entry.get().strip()
+        hour = self.hour_entry.get().strip()
+
+        if not date or not hour:
+            messagebox.showwarning(f"{self.i18n.t("m_b.error")}!", f"{self.i18n.t("m_b.all_entries")}!")
+            return
+
+        try:
+            if not self.is_24h:
+                time_obj = dt.datetime.strptime(hour, "%I:%M:%S %p")
+            else:
+                time_obj = dt.datetime.strptime(hour, "%H:%M:%S")
+
+            hour_to_save = time_obj.strftime("%H:%M:%S")
+
+        except ValueError:
+            messagebox.showerror(f"{self.i18n.t("m_b.format_error")}", 
+                f"{self.i18n.t("m_b.incorrect_hour_format")}!")
+            return
+
+        success, error = add_trial_to_db(date, hour_to_save, self.app_path)
         if not success:
-            messagebox.showerror("Database Error", f"{error}")
+            messagebox.showerror(f"{self.i18n.t("m_b.db_error")}", f"{error}")
         else:
             pass
 
@@ -151,18 +208,26 @@ class AddTrial(tk.Toplevel):
         self.date_entry.insert(0, today)
 
     def _format_time(self, *args):
-        text = self.time_var.get()
-        digits = "".join([char for char in text if char.isdigit()])
-        digits = digits[:6]
+        text = self.time_var.get().upper()
+        digits = "".join([char for char in text if char.isdigit()])[:6]
+        suffix = ""
+        if hasattr(self, 'is_24h') and not self.is_24h:
+            if "P" in text:
+                suffix = " PM"
+            else:
+                suffix = " AM"
+
         formatted = ""
         for i, char in enumerate(digits):
             if i == 2 or i == 4:
                 formatted += ":"
             formatted += char
 
+        full_text = formatted + suffix
+
         self.time_var.trace_remove("write", self.trace_time)
-        self.time_var.set(formatted)
-        self.hour_entry.after(10, lambda: self.hour_entry.icursor(tk.END))
+        self.time_var.set(full_text)
+        self.hour_entry.after(10, lambda: self.hour_entry.icursor(len(formatted)))
         self.trace_time = self.time_var.trace_add("write", self._format_time)
 
     def _format_date(self, *args):

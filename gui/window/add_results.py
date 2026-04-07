@@ -141,7 +141,7 @@ class AddResults(tk.Toplevel):
     def _save(self, app_path, event=None):
         selected_trial = self.trial_combo.get()
         if not selected_trial:
-            messagebox.showerror("Brak serii", "XXX")
+            messagebox.showerror(f"{self.i18n.t("m_b.no_trial")}", f"{self.i18n.t("m_b.select_trial")}!")
             return
         id_trial = selected_trial.split()[0]
 
@@ -159,7 +159,7 @@ class AddResults(tk.Toplevel):
             add_results_to_db(inputs_to_db, app_path)
             self._clear_inputs()
         else:
-            messagebox.showerror("Brak danych", "XXX")
+            messagebox.showerror(f"{self.i18n.t("m_b.no_data")}", f"{self.i18n.t("m_b.all_entries")}")
 
     def _clear_inputs(self):
         self.trial_combo.set("")
