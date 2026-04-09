@@ -25,8 +25,7 @@ class AddResults(tk.Toplevel):
 
         self.umas = load_umas(app_path)
         self.team = load_team(app_path)
-        self.trials = load_trials_short(app_path)
-        self.combo_trials = self.trials[::-1]
+        self.combo_trials = load_trials_short(app_path)
 
         self.distances = get_distances(app_path)
         self.roles = ['fr', 'pc', 'ls', 'ec']
@@ -65,6 +64,7 @@ class AddResults(tk.Toplevel):
             self.info_row_label,
             values=self.combo_trials,
             state="readonly",
+            width=30,
         )
         self.trial_combo.pack(side="left", expand=True, padx=20)
 
@@ -136,9 +136,10 @@ class AddResults(tk.Toplevel):
             command=lambda: self._save(app_path),
         )
         self.save.pack(side="left", expand=True, padx=20)
-        self.bind("<Return>", self._save)
+        self.bind("<Return>", lambda event: self._save(app_path))
 
     def _save(self, app_path, event=None):
+        """Save the results to the database"""
         selected_trial = self.trial_combo.get()
         if not selected_trial:
             messagebox.showerror(f"{self.i18n.t("m_b.no_trial")}", f"{self.i18n.t("m_b.select_trial")}!")
@@ -162,11 +163,27 @@ class AddResults(tk.Toplevel):
             messagebox.showerror(f"{self.i18n.t("m_b.no_data")}", f"{self.i18n.t("m_b.all_entries")}")
 
     def _clear_inputs(self):
-        self.trial_combo.set("")
+        """
+        Clears text fields after saving to the DB.
+        Advances the combobox to the next trial in the sequence.
+        """
+        selected_trial = self.trial_combo.get()
+        try:
+            current_trial_index = self.combo_trials.index(selected_trial)
+            if current_trial_index > 0:
+                next_value = self.combo_trials[current_trial_index - 1]
+                self.trial_combo.set(next_value)
+            else:
+                self.trial_combo.set("")
+        except ValueError:
+            if self.combo_trials:
+                self.trial_combo.set(self.combo_trials[-1])
+            else:
+                self.trial_combo.set("")
         for pos, uma_inputs in self.inputs.items():
             for uma_id, input in uma_inputs.items():
                 input.delete(0, 'end')
-        self.trial_combo.focus_set()
+        self.input.focus_set()
 
     def _exit(self):
         self.destroy()

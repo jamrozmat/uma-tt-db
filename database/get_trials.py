@@ -35,13 +35,9 @@ def load_trials_short(app_path):
     db_path = load_db_path(app_path)
     con = sqlite3.connect(db_path)
     cur = con.cursor()
-    cur.execute("SELECT Trial_ID, Trial_Date, Trial_Time from Trials")
+    cur.execute("SELECT Trial_ID, Trial_Date, Trial_Time from Trials ORDER BY Trial_ID DESC")
     rows = cur.fetchall()
     con.close()
 
-    formatted = []
-    for row in rows:
-        line = f"{row[0]}   |  {row[1]}  |  {row[2]}"
-        formatted.append(line)
-
-    return formatted[::-1]
+    formatted = [f"{row[0]}   |  {row[1]}  |  {row[2]}" for row in rows]
+    return formatted
