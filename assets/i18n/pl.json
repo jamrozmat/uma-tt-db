@@ -15,7 +15,7 @@
     "main_menu": {
         "info": "Chcesz pomóc i ujrzeć tutaj swój artwork?\nSkontaktuj się z deweloperem!",
         "pragma": "PRAGMA bazy danych:",
-        "pragma_info": "Przedstawia wersję bazy danych.\nWięcej informacji w oknie 'Pomoc'.",
+        "pragma_info": "Przedstawia wersję bazy danych.",
         "add_uma": "Dodaj Uma",
         "add_uma_info": "Dodaj nową Uma do bazy danych",
         "add_trial": "Dodaj wyścig TT",
@@ -66,7 +66,7 @@
         "choose": "Wybierz coś...",
         "dotyczy": "Dotyczy aktualnego składu",
         "back": "Wyjdź do menu",
-        "series": "Wyścigi TT:",
+        "series": "Wyścigi TT",
         "chosen_uma": "Wybrano Uma",
         "chosen_distance": "Wybrano dystans",
         "chosen_trial": "Wybrano wyścig TT"
@@ -109,6 +109,23 @@
         "trial3": "Przycisk 'Dzisiaj' natychmiast wprowadzi dzisiejszą datę.",
         "trial4": "Przycisk formatu godziny oraz pole zaznaczenia 'Nie czyść'\nzachowają swoje ustawienia.",
         "trial5": "Nie trzeba wprowadzać żadnych znaków, zostaną one dodane automatycznie.",
-        "trial6": "Po wprowadzeniu danych zapisz wyścig klikając przycisk\n'Dodaj wyścig TT' lub naciskając Enter."
+        "trial6": "Po wprowadzeniu danych zapisz wyścig klikając przycisk\n'Dodaj wyścig TT' lub naciskając Enter.",
+        "trial7": "Wprowadź od razu wszystkie aktualne wyścigi, przykładowo 5 najnowszych.\nPrzyspieszy to pracę.",
+        "add_results": "Dodawanie wyników",
+        "results1": "Kolejnym krokiem jest oczywiście wprowadzenie wyników\nTwoich Uma. To okno wczytuje Twój aktualny skład.",
+        "results2": "Po pierwsze, z górnej wysuwanej listy wybierz wyścig TT,\ndo którego chcesz dodać wyniki.\nNajlepiej wybrać najstarszy możliwy wyścig, ten który\nwprowadziłeś jako pierwszy w poprzednim oknie.",
+        "results3": "Następnie wprowadź zdobyte pozycje dla wszystkich Uma.\nWprowadź je w postaci liczby całkowitej (np. '1')\nKliknij 'Zapisz wyniki'.",
+        "results4": "Program zapisze wszystkie dane do bazy danych i natychmiast\nustawi wyścig na nowszy. Jeżeli takiego nie ma,\nwyświetli pusty box.",
+        "view_results": "Wyświetlanie wyników",
+        "view1": "Jest to najważniejsze okno programu.\nTutaj możesz śledzić i analizować wyniki Twoich Uma.",
+        "view2": "U góry po lewej znajduje się lista wszystkich Twoich Uma,\npo wybraniu którejś możesz zobaczyć na wykresie jej postępy.",
+        "view3": "Górny wykres przedstawia dystanse, po wybraniu któregoś\nwykres przedstawi wszystkie Uma przypisane do niego.",
+        "view4": "Prawy górny wykres przedstawia konkretny wyścig Team Trials.\nPo wybraniu któregoś wykres przedstawi zdobyte miejsca wszystkich Uma,\nktóre brały udział w danym wyścigu.",
+        "view5": "Nad przyciskiem 'Powrót do menu' znajduje się okienko\nwskazujące aktualnie wybraną wartość z list.",
+        "view6": "Pod przyciskiem znajduje się checkbox, który - po zaznaczeniu - przefiltruje\nUma z list dystansu i wyścigu pod względem ich obecności w Twoim aktualnym składzie.\nZaznaczony wyświetli tylko te Uma, które masz w składzie.\nPo jego zaznaczeniu musisz ponownie wybrać wartość z list, aby zadziałał.\nCheckbox ten nie działa na liście Uma.",
+        "view7": "Sam wykres wyróżnia miejsca pierwsze, drugie i trzecie,\nw osi pionowej przedstawia zdobytą pozycję, a w osi poziomej przedstawia\nkonkretny wyścig TT (w przypadku list Uma i dystansu)\nalbo konkretną Uma (w przypadku listy wyścigu TT).",
+        "summary": "Podsumowanie",
+        "summary1": "W menu głównym programu znajduje się link\ndo tego programu w serwisie Github - zachęcam\ndo zajrzenia tam, komentowania i proponowania poprawek, zmian i nowości!",
+        "summary2": "Mam nadzieję, że korzystanie z tego programu będzie owocne\ni przyjemne i przyniesie korzyści podczas rozgrywki\nw UmaMusume: Pretty Derby."
     }
 }

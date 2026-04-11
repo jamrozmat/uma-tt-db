@@ -23,7 +23,15 @@ class Help(tk.Toplevel):
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand=True)
 
-        self.page_classes = [StartPage, AddUma, SetTeam, AddTrial]
+        self.page_classes = [
+            StartPage,
+            AddUma,
+            SetTeam,
+            AddTrial,
+            AddResults,
+            ViewResults,
+            Summary
+            ]
         self.frames = {}
         self.current_index = 0
 
@@ -53,6 +61,15 @@ class Help(tk.Toplevel):
             )
         self.btn_next.pack(side="right", padx=20)
 
+        self.btn_exit = tk.Button(
+            nav_bar,
+            text=f"{self.i18n.t("uma_add.exit")}",
+            relief="solid",
+            borderwidth=1,
+            command=self.quit,
+        )
+        self.btn_exit.pack(expand=True)
+
         self.show_page()
 
     def show_page(self):
@@ -73,6 +90,9 @@ class Help(tk.Toplevel):
         if self.current_index > 0:
             self.current_index -= 1
             self.show_page()
+
+    def quit(self):
+        self.destroy()
 
 class StartPage(tk.Frame):
     def __init__(self, parent, controller, i18n):
@@ -161,3 +181,64 @@ class AddTrial(tk.Frame):
         add_tt = tk.Label(self, image=self.add_tt_img)
         add_tt.pack(pady=10)
         tk.Label(self, text=f"{self.i18n.t("help.trial6")}").pack()
+        tk.Label(self, text=f"{self.i18n.t("help.trial7")}").pack()
+
+class AddResults(tk.Frame):
+    def __init__(self, parent, controller, i18n):
+        super().__init__(parent)
+        self.controller = controller
+        self.i18n = i18n
+
+        tk.Label(self,
+                text=f"{self.i18n.t("help.add_results")}",
+                font=("Arial", 18, "bold")
+                ).pack(pady=50)
+        tk.Label(self, text=f"{self.i18n.t("help.results1")}").pack(pady=20)
+        addresults_file = resource_path(f'uma-tt-db/assets/img/add_results.png')
+        addresults_img = Image.open(str(addresults_file))
+        new_size = (300, 300)
+        addresults_img = addresults_img.resize(new_size, Image.LANCZOS)
+        self.add_results_img = ImageTk.PhotoImage(addresults_img)
+        add_results = tk.Label(self, image=self.add_results_img)
+        add_results.pack()
+        tk.Label(self, text=f"{self.i18n.t("help.results2")}").pack()
+        tk.Label(self, text=f"{self.i18n.t("help.results3")}").pack()
+        tk.Label(self, text=f"{self.i18n.t("help.results4")}").pack()
+
+class ViewResults(tk.Frame):
+    def __init__(self, parent, controller, i18n):
+        super().__init__(parent)
+        self.controller = controller
+        self.i18n = i18n
+
+        tk.Label(self,
+            text=f"{self.i18n.t("help.view_results")}",
+            font=("Arial", 18, "bold")
+            ).pack(pady=10)
+        tk.Label(self, text=f"{self.i18n.t("help.view1")}").pack()
+        view_file = resource_path(f'uma-tt-db/assets/img/view_results.png')
+        view_img = Image.open(str(view_file))
+        new_size = (340, 280)
+        view_img = view_img.resize(new_size, Image.LANCZOS)
+        self.view_results_img = ImageTk.PhotoImage(view_img)
+        view_results = tk.Label(self, image=self.view_results_img)
+        view_results.pack(pady=2)
+        tk.Label(self, text=f"{self.i18n.t("help.view2")}").pack()
+        tk.Label(self, text=f"{self.i18n.t("help.view3")}").pack()
+        tk.Label(self, text=f"{self.i18n.t("help.view4")}").pack()
+        tk.Label(self, text=f"{self.i18n.t("help.view5")}").pack()
+        tk.Label(self, text=f"{self.i18n.t("help.view6")}").pack()
+        tk.Label(self, text=f"{self.i18n.t("help.view7")}").pack()
+
+class Summary(tk.Frame):
+    def __init__(self, parent, controller, i18n):
+        super().__init__(parent)
+        self.controller = controller
+        self.i18n = i18n
+
+        tk.Label(self,
+                text=f"{self.i18n.t("help.summary")}",
+                font=("Arial", 18, "bold"),
+                ).pack(pady=50)
+        tk.Label(self, text=f"{self.i18n.t("help.summary1")}").pack(pady=20)
+        tk.Label(self, text=f"{self.i18n.t("help.summary2")}").pack()

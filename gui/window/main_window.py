@@ -2,6 +2,7 @@
 
 import tkinter as tk
 import webbrowser
+import random
 
 from core.i18n import I18n
 from core.tooltip import ToolTip
@@ -42,6 +43,20 @@ class MainWindow(tk.Toplevel):
         pragma_label = tk.Label(self, text=pragma_text, fg="gray")
         ToolTip(pragma_label, f"{self.i18n.t("main_menu.pragma_info")}")
         pragma_label.pack(side="top", anchor="nw", padx=10, pady=40)
+
+        # GOLD RANDOM TEXT
+        parent_bg = self.master.cget('bg') if hasattr(self, 'master') and self.master else "#d9d9d9"
+        self.splash_canvas = tk.Canvas(self, bg=parent_bg, highlightthickness=0, 
+                                      width=400, height=50)
+        self.splash_canvas.pack(anchor="e", pady=5)
+        # You can add more random text here
+        random_texts = [
+            'AGEMASEN!',
+            'Wei wei~☆!',
+            'Bakushin, Bakushin, Bakushinshin!',
+            'Haru Urara, ganbarimaaaasu~!']
+        text = random.choice(random_texts)
+        self._draw_outlined_text(self.splash_canvas, 350, 25, text)
 
         # ADD NEW UMA
         add_uma_button = tk.Button(
@@ -217,3 +232,13 @@ class MainWindow(tk.Toplevel):
 
     def _close_program(self):
         close()
+
+    def _draw_outlined_text(self, canvas, x, y, text_content, main_color="gold", outline_color="black"):
+        text_font = ("Helvetica", 12, "bold")
+        offsets = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        for dx, dy in offsets:
+            canvas.create_text(x + dx, y + dy, text=text_content, fill=outline_color, 
+                            font=text_font, anchor="e")
+
+        return canvas.create_text(x, y, text=text_content, fill=main_color, 
+                                font=text_font, anchor="e")
