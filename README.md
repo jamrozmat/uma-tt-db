@@ -44,7 +44,7 @@ Download and install **Git** from the official website: [link](https://git-scm.c
 
 Download and install **Python3.13** from the official website: [link](https://www.python.org/downloads/windows/)
 
-    - IMPORTANT: In the Python installer, make sure to check the "Add Python to PATH" box before proceeding.
+- IMPORTANT: In the Python installer, make sure to check the "Add Python to PATH" box before proceeding.
 
 Open CMD, navigate to your destination folder, and clone the repository:
 
