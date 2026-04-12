@@ -36,12 +36,12 @@ class ActualTeam(tk.Toplevel):
         self.info.config(padx=10, pady=10)
         self.info.pack()
 
-        categories = {
-            "SPRINT": ["FR", "PC", "LS", "EC"],
-            "MILE": ["FR", "PC", "LS", "EC"],
-            "MEDIUM": ["FR", "PC", "LS", "EC"],
-            "LONG": ["FR", "PC", "LS", "EC"],
-            "DIRT": ["FR", "PC", "LS", "EC"],
+        self.DIST_MAP = {
+            "SPRINT": 0,
+            "MILE": 1,
+            "MEDIUM": 2,
+            "LONG": 3,
+            "DIRT": 4
         }
 
         tooltips = {
@@ -51,25 +51,24 @@ class ActualTeam(tk.Toplevel):
             "EC": "End Closer"
         }
 
-        uma_values = [f"{row[2]} {row[1]}" for row in self.umas]
         self.combos = {}
 
         # SPRINT & MILE
         sm_row = tk.Frame(self)
         sm_row.pack(fill="x", padx=10, pady=10)
-        self._build_category(sm_row, "SPRINT", uma_values, tooltips)
-        self._build_category(sm_row, "MILE", uma_values, tooltips)
+        self._build_category(sm_row, "SPRINT", tooltips)
+        self._build_category(sm_row, "MILE", tooltips)
 
         # MEDIUM & LONG
         ml_row = tk.Frame(self)
         ml_row.pack(fill="x", padx=10, pady=10)
-        self._build_category(ml_row, "MEDIUM", uma_values, tooltips)
-        self._build_category(ml_row, "LONG", uma_values, tooltips)
+        self._build_category(ml_row, "MEDIUM", tooltips)
+        self._build_category(ml_row, "LONG", tooltips)
 
         # DIRT + BUTTONS
         d_row = tk.Frame(self)
         d_row.pack(fill="x", padx=10, pady=10)
-        self._build_category(d_row, "DIRT", uma_values, tooltips)
+        self._build_category(d_row, "DIRT", tooltips)
 
         btn_frame = tk.Frame(d_row)
         btn_frame.pack(side="left", fill="both", expand=True, padx=2, pady=2)
@@ -91,7 +90,7 @@ class ActualTeam(tk.Toplevel):
             command=self._save,
         ).pack(side="left", expand=True, padx=2)
 
-    def _build_category(self, parent, name, values, tooltips):
+    def _build_category(self, parent, name, tooltips):
         frame = tk.Frame(parent, relief="solid", borderwidth=1)
         frame.pack(side="left", fill="both", expand=True, padx=2, pady=2)
 
@@ -103,6 +102,10 @@ class ActualTeam(tk.Toplevel):
 
         self.combos[name] = {}
 
+        distance_id = self.DIST_MAP.get(name)
+        filtered_data = [u for u in self.umas if u[3] == distance_id]
+        display_values = [f"{u[2]} {u[1]}" for u in filtered_data]
+
         for code, full_name in tooltips.items():
             row_frame = tk.Frame(frame)
             row_frame.pack(anchor="w", padx=2, pady=1)
@@ -111,21 +114,27 @@ class ActualTeam(tk.Toplevel):
             lbl.pack(side="left", padx=2)
             ToolTip(lbl, full_name)
 
-            cb = ttk.Combobox(row_frame, values=values, state="readonly")
+            cb = ttk.Combobox(row_frame, values=display_values, state="readonly")
             cb.pack()
 
             lbl.bind("<Button-1>", lambda e, c=cb: self._reset_combo(e, c))
 
-            self.combos[name][code] = cb
+            self.combos[name][code] = {
+                "widget": cb,
+                "data": filtered_data
+            }
 
     def _save(self):
         results = {}
         for category, roles in self.combos.items():
             for role, combo in roles.items():
                 key = f"{category.lower()}_{role.lower()}_uma"
-                idx = combo.current()
+                cb = combo["widget"]
+                data = combo["data"]
 
-                results[key] = self.umas[idx][0] if idx != -1 else None
+                idx = cb.current()
+
+                results[key] = data[idx][0] if idx != -1 else None
 
         print(results)
         self._save_results(results, self.app_path)
@@ -143,9 +152,11 @@ class ActualTeam(tk.Toplevel):
                     uma_id = results.get(key)
 
                     if uma_id is not None:
-                        for i, row in enumerate(self.umas):
+                        cb = combo["widget"]
+                        data = combo["data"]
+                        for i, row in enumerate(data):
                             if str(row[0]) == str(uma_id):
-                                combo.current(i)
+                                cb.current(i)
                                 break
 
         except Exception as e:

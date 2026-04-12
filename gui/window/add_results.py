@@ -4,9 +4,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
-from database.get_uma import (
-    load_umas, load_umas_by_id
-)
+from database.get_uma import (load_umas_by_id)
 from database.get_team import load_team
 from database.get_distances import get_distances
 from database.get_trials import load_trials_short
@@ -23,7 +21,6 @@ class AddResults(tk.Toplevel):
         self.title(f"{self.i18n.t("add_results.title")}")
         self.geometry("400x720")
 
-        self.umas = load_umas(app_path)
         self.team = load_team(app_path)
         self.combo_trials = load_trials_short(app_path)
 

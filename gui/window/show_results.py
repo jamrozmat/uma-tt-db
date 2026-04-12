@@ -5,6 +5,7 @@ from tkinter import messagebox
 
 from gui.widgets.chart import Chart
 from database.get_uma import (
+    load_umas,
     load_uma_position,
     load_uma_name,
     load_umas_by_distance,
@@ -147,9 +148,8 @@ class ShowResults(tk.Toplevel):
         self.chart.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True, padx=10, pady=10)
 
     def load_uma_list(self):
-        from database.get_uma import load_umas
         data = load_umas(self.app_path)
-        return [f"[{r[0]}]    {r[2]} {r[1]}" for r in data]            
+        return [f"[{r[0]}]    {r[2]} {r[1]}" for r in reversed(data)]
 
     def refresh_uma_list(self):
         data = self.load_uma_list()

@@ -5,11 +5,11 @@ import sqlite3
 from setup.config import load_db_path
 
 def load_umas(app_path):
-    """Retrieve Uma's ID, name and rank."""
+    """Retrieve Uma's ID, name, rank and distance."""
     db_path = load_db_path(app_path)
     con = sqlite3.connect(db_path)
     cur = con.cursor()
-    cur.execute("SELECT Uma_ID, Uma_Name, Uma_Rank FROM Uma")
+    cur.execute("SELECT Uma_ID, Uma_Name, Uma_Rank, Distance_ID FROM Uma")
     rows = cur.fetchall()
     con.close()
     return rows

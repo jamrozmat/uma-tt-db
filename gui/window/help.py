@@ -7,6 +7,9 @@ from PIL import Image, ImageTk
 
 from core.i18n import I18n
 from setup.resources import resource_path
+from metadata import __author__
+from metadata import __contributors__
+from metadata import __graphic_authors__
 
 class Help(tk.Toplevel):
     def __init__(self, lang, master=None):
@@ -108,13 +111,70 @@ class StartPage(tk.Frame):
         tk.Label(self, text=f"{self.i18n.t("help.welcome")}").pack()
         next = tk.Label(self, text=f"{self.i18n.t("help.welcome2")}")
         next.config(font=("TkDefaultFont", 10, "bold"))
-        next.pack(pady=25)
+        next.pack(pady=60)
 
-        # ! Refactor as it expands:
         tk.Label(
             self,
-            text=f"{self.i18n.t("help.authors")}"
-            ).pack(pady=60)
+            text=f"{self.i18n.t("help.authors")}",
+            font=("Helvetica", 10, "bold")
+            ).pack()
+        tk.Label(self, text=f"{__author__}").pack()
+
+        tk.Label(self,
+                text=self.i18n.t("help.contributors"),
+                font=("Helvetica", 10, "bold")).pack(pady=(10,0))
+
+        self.contributors = tk.Listbox(
+            self,
+            height=8,
+            width=20,
+            bg=self.master.cget('bg') if hasattr(self, 'master') and self.master else "#d9d9d9",
+            justify="center",
+            relief="flat",
+            takefocus=0,
+            exportselection=0,
+            highlightthickness=0,
+            activestyle="none",
+            selectbackground=self.master.cget('bg'),
+            selectforeground="black",
+        )
+        self.contributors.bind("<Button-1>", lambda e: "break")
+        self.contributors.pack()
+        self._get_contributors()
+
+        tk.Label(self,
+                text=f"{self.i18n.t("help.graphic")}",
+                font=("Helvetica", 10, "bold")).pack(pady=(5,0))
+
+        self.graphic_authors = tk.Listbox(
+            self,
+            height=8,
+            width=20,
+            bg=self.master.cget('bg') if hasattr(self, 'master') and self.master else "#d9d9d9",
+            justify="center",
+            relief="flat",
+            takefocus=0,
+            exportselection=0,
+            highlightthickness=0,
+            activestyle="none",
+            selectbackground=self.master.cget('bg'),
+            selectforeground="black",
+        )
+        self.graphic_authors.bind("<Button-1>", lambda e: "break")
+        self.graphic_authors.pack()
+        self._get_graphicauthors()
+
+    def _get_contributors(self):
+        if __contributors__:
+            for c in __contributors__:
+                self.contributors.insert(tk.END, c)
+
+    def _get_graphicauthors(self):
+        if __graphic_authors__:
+            for g in __graphic_authors__:
+                self.graphic_authors.insert(tk.END, g)
+        else:
+            return []
 
 class AddUma(tk.Frame):
     def __init__(self, parent, controller, i18n):
