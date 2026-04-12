@@ -28,6 +28,7 @@
         "choose_team_info": "Set your current TT team lineup\nto speed up result entry.",
         "help": "Help",
         "help_info": "Read the user guide.",
+        "lang_info": "Change language.\nRestart the program to apply changes.",
         "author": "Author",
         "version": "Program Version",
         "license_info": "Click to read the GNU GPL license\non the official website.",

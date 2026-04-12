@@ -28,6 +28,7 @@
         "choose_team_info": "Ustaw obecny skład Twojej drużyny TT,\naby przyspieszyć wprowadzanie wyników.",
         "help": "Pomoc",
         "help_info": "Przeczytaj obsługę programu.",
+        "lang_info": "Zmień język programu. Zmiana zostanie\nwprowadzona po ponownym uruchomieniu programu.",
         "author": "Autor",
         "version": "Wersja programu",
         "license_info": "Kliknij, by przeczytać licencję na oficjalnej stronie.",

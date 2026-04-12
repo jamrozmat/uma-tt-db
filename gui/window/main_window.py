@@ -9,6 +9,7 @@ from core.tooltip import ToolTip
 from core.close import close
 from database.db_manager import pragma
 from metadata import __author__, __version__
+from gui.window.lang import ask_lang
 
 class MainWindow(tk.Toplevel):
     def __init__(self, app_path, lang, __app_name__, master=None):
@@ -118,9 +119,29 @@ class MainWindow(tk.Toplevel):
         ToolTip(actual_team_button, f"{self.i18n.t("main_menu.choose_team_info")}")
         actual_team_button.pack(pady=20)
 
+        # HELP and LANGUAGE ROW
+        help_row = tk.Frame(self)
+        help_row.pack(fill="x", pady=20)
+
+        help_row.columnconfigure(0, weight=1, uniform="group1")
+        help_row.columnconfigure(1, weight=0)
+        help_row.columnconfigure(2, weight=1, uniform="group1")
+
+        # LANG WINDOW
+        lang_button = tk.Button(
+            help_row,
+            text="🌐",
+            font=("Arial", 16),
+            relief="solid",
+            borderwidth=1,
+            command=lambda: self._language(self.app_path),
+        )
+        ToolTip(lang_button, f"{self.i18n.t("main_menu.lang_info")}")
+        lang_button.grid(row=0, column=0, sticky="e", padx=10)
+
         # HELP WINDOW
         help_button = tk.Button(
-            self,
+            help_row,
             text=f"{self.i18n.t("main_menu.help")}",
             relief="raised",
             borderwidth=1,
@@ -128,7 +149,7 @@ class MainWindow(tk.Toplevel):
         )
         help_button.config(width=20, cursor="hand2")
         ToolTip(help_button, f"{self.i18n.t("main_menu.help_info")}")
-        help_button.pack(pady=20)
+        help_button.grid(row=0, column=1)
 
         # BOTTOM INFO LABEL
         info_label = tk.Label(
@@ -226,6 +247,11 @@ class MainWindow(tk.Toplevel):
         help_window = Help(master=self, lang=self.lang)
         help_window.focus_set()
         help_window.grab_set()
+
+    def _language(self, app_path):
+        lang_window = ask_lang(app_path)
+        lang_window.focus_set()
+        lang_window.grab_set()
 
     def _open_url(self, html):
         webbrowser.open(html)

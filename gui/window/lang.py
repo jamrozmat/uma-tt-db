@@ -11,12 +11,12 @@ def ask_lang(app_path):
     root.geometry("200x150")
 
     window = tk.Frame(root)
-    window.grid()
+    window.pack()
 
     lang_code = None
 
     ask = tk.Label(window, text="Choose your language:\nWybierz język:")
-    ask.grid(pady=20)
+    ask.pack(pady=10)
 
     LANG_MAPPING = {
         "English": "en",
@@ -29,7 +29,7 @@ def ask_lang(app_path):
         width=10,
     )
     choose.current(0)
-    choose.grid(padx=20, pady=4)
+    choose.pack(pady=4)
 
     def _save():
         nonlocal lang_code
@@ -39,7 +39,7 @@ def ask_lang(app_path):
         root.destroy()
 
     btn = tk.Button(window, text="OK", command=_save)
-    btn.grid(pady=2)
+    btn.pack(pady=2)
 
     root.mainloop()
 
