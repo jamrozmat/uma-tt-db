@@ -180,7 +180,13 @@ class AddResults(tk.Toplevel):
         for pos, uma_inputs in self.inputs.items():
             for uma_id, input in uma_inputs.items():
                 input.delete(0, 'end')
-        self.input.focus_set()
+        if self.inputs:
+            try:
+                first_pos_dict = next(iter(self.inputs.values()))
+                first_input_entry = next(iter(first_pos_dict.values()))
+                first_input_entry.focus_set()
+            except StopIteration:
+                pass
 
     def _exit(self):
         self.destroy()
