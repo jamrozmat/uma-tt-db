@@ -12,7 +12,7 @@ from database.get_uma import (
     load_umas_by_trial,
     load_uma_result_in_trial)
 from database.get_team import load_team
-from database.get_trials import load_trials
+from database.get_trials import (load_trials, load_type_of_run)
 from core.i18n import I18n
 import numpy as np
 
@@ -65,6 +65,13 @@ class ShowResults(tk.Toplevel):
                                 )
         self.uma_list.pack(anchor="w")
         self.uma_list.bind("<ButtonRelease-1>", self.on_uma_click)
+
+        self.uma_list_average = tk.Label(
+            uma_list_frame,
+            text="",
+            font="Helvetica",
+        )
+        self.uma_list_average.pack(anchor="w", pady=2)
 
         self.refresh_uma_list()
 
@@ -180,6 +187,16 @@ class ShowResults(tk.Toplevel):
                     messagebox.showwarning(f"{self.i18n.t("m_b.error")}", f"{self.i18n.t("m_b.no_data_for_uma")}: {uma_id}")
                     return
 
+                clean_scores = [s for s in score if s is not None]
+                if clean_scores:
+                    average_val = sum(clean_scores) / len(clean_scores)
+                    display_avg = f"{average_val:.0f}"
+                    self.uma_list_average.config(
+                    text=f"{self.i18n.t('score_win.uma_list_avr')}: {display_avg}",
+                )
+                else:
+                    self.uma_list_average.config(text="")
+
                 dataset = {str(uma_name): positions}
                 self.chart.update_data(labels, dataset, scores=score)
 
@@ -193,7 +210,6 @@ class ShowResults(tk.Toplevel):
 
     def run_type_show(self):
         try:
-            from database.get_trials import load_type_of_run
             data = load_type_of_run(self.app_path)
             self.type_run.delete(0, tk.END)
             self.type_run.insert(tk.END, *data)
@@ -205,6 +221,7 @@ class ShowResults(tk.Toplevel):
         if selected_runtype:
             full_text = self.type_run.get(selected_runtype[0])
             try:
+                self.uma_list_average.config(text="")
                 raw_id = full_text.split('|')
                 runtype_id = raw_id[0].strip()
                 runtype_id = int(runtype_id)
@@ -232,6 +249,7 @@ class ShowResults(tk.Toplevel):
         if selected_serie:
             full_text = self.trials.get(selected_serie[0])
             try:
+                self.uma_list_average.config(text="")
                 raw_id = full_text.split('|')
                 trial_id = raw_id[0].strip()
                 trial_id = int(trial_id)

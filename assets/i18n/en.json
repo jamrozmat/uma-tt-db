@@ -23,7 +23,7 @@
         "add_results": "Add Results",
         "add_results_info": "Add Team Trials race results",
         "show_results": "View Results",
-        "show_results_info": "View detailed results of your Uma",
+        "show_results_info": "View detailed results of your Umas",
         "choose_team": "Set Lineup",
         "choose_team_info": "Set your current TT team lineup\nto speed up result entry.",
         "help": "Help",
@@ -63,6 +63,7 @@
     "score_win": {
         "title": "Results",
         "uma_list": "Uma List",
+        "uma_list_avr": "Average Score",
         "rodzaje": "Distances",
         "choose": "Select option...",
         "dotyczy": "Current squad only",

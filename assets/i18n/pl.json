@@ -63,6 +63,7 @@
     "score_win": {
         "title": "Wyniki",
         "uma_list": "Lista Uma",
+        "uma_list_avr": "Średnia punktacji",
         "rodzaje": "Dystanse",
         "choose": "Wybierz coś...",
         "dotyczy": "Dotyczy aktualnego składu",
