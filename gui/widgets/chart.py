@@ -15,6 +15,7 @@ class Chart(tk.Frame):
         self.is_bar = False             # Uma's places, different chart
         self.view_size = view_size
         self.ax2 = None                 # Score axis
+        self.ax3_avg = None             # Score average on chart as a dotted line
 
         self.x_indices = list(range(len(self.x_data)))
 
@@ -44,6 +45,10 @@ class Chart(tk.Frame):
         if self.ax2 is not None:
             self.ax2.remove()
             self.ax2 = None
+
+        if self.ax3_avg is not None:
+            self.ax3_avg.remove()
+            self.ax3_avg = None
 
         if self.is_bar:
             self.x_indices = list(range(len(self.x_data)))
@@ -113,7 +118,7 @@ class Chart(tk.Frame):
                             fontsize=8,
                             color='steelblue',
                             alpha=0.75,
-                            zorder=2,
+                            zorder=3,
                             clip_on=True,
                         )
                 self.ax2.set_ylabel('Score', fontsize=7, color='steelblue', labelpad=2)
@@ -122,7 +127,22 @@ class Chart(tk.Frame):
                 self.ax2.yaxis.set_major_locator(MaxNLocator(nbins=4, integer=True))
 
                 self.ax2.set_zorder(self.ax.get_zorder() - 1)
+
+                clean_scores = [s for s in scores if s is not None]
+                if clean_scores:
+                    average_val = sum(clean_scores) / len(clean_scores)
+                    self.ax3_avg = self.ax2.axhline(
+                        y=average_val,
+                        color='steelblue',
+                        linestyle='--',
+                        linewidth=1,
+                        alpha=0.4,
+                        label=f'{average_val:.0f}',
+                        zorder=1,
+                    )
                 self.ax.set_frame_on(False)
+                self.ax2.legend(loc='lower left', fontsize='small',
+                                   ncol=2 if len(self.y_data) >5 else 1)
 
             if isinstance(self.y_data, dict):
                 for name, values in self.y_data.items():
@@ -154,7 +174,8 @@ class Chart(tk.Frame):
                         self.ax.scatter(bronze_x, bronze_y, color='#CD7F32', s=50, zorder=3)
 
                 if self.y_data:
-                    self.ax.legend(loc='lower left', fontsize='small', ncol=2 if len(self.y_data) >5 else 1)
+                    self.ax.legend(loc='lower left', fontsize='small',
+                                   ncol=2 if len(self.y_data) >5 else 1)
 
         self.fig.subplots_adjust(left=0.05, right=0.95, top=0.9, bottom=0.25)
         self.update_view()

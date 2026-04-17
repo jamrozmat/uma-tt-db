@@ -29,6 +29,8 @@
         "help": "Pomoc",
         "help_info": "Przeczytaj obsługę programu.",
         "lang_info": "Zmień język programu. Zmiana zostanie\nwprowadzona po ponownym uruchomieniu programu.",
+        "settings": "Ustawienia",
+        "settings_info": "Zmień ustawienia programu",
         "author": "Autor",
         "version": "Wersja programu",
         "license_info": "Kliknij, by przeczytać licencję na oficjalnej stronie.",
@@ -137,5 +139,8 @@
         "summary": "Podsumowanie",
         "summary1": "W menu głównym programu znajduje się link\ndo tego programu w serwisie Github - zachęcam\ndo zajrzenia tam, komentowania i proponowania poprawek, zmian i nowości!",
         "summary2": "Mam nadzieję, że korzystanie z tego programu będzie owocne\ni przyjemne i przyniesie korzyści podczas rozgrywki\nw UmaMusume: Pretty Derby."
+    },
+    "settings": {
+        "title": "Ustawienia"
     }
 }

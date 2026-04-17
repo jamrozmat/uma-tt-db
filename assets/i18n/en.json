@@ -29,6 +29,8 @@
         "help": "Help",
         "help_info": "Read the user guide.",
         "lang_info": "Change language.\nRestart the program to apply changes.",
+        "settings": "Settings",
+        "settings_info": "Change program settings",
         "author": "Author",
         "version": "Program Version",
         "license_info": "Click to read the GNU GPL license\non the official website.",
@@ -137,5 +139,6 @@
         "summary": "Summary",
         "summary1": "In the main menu, you will find a link to this project's\nGitHub repository. I encourage you to check it out, leave comments,\nand suggest fixes, changes, or new features!",
         "summary2": "I hope using this program proves fruitful and pleasant,\nbringing you success in your UmaMusume: Pretty Derby gameplay."
-    }
+    },
+    "settings": "Settings"
 }

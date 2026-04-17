@@ -10,6 +10,14 @@ from core.close import close
 from database.db_manager import pragma
 from gui.window.lang import ask_lang
 
+from gui.window.add_uma import AddUma
+from gui.window.add_trial import AddTrial
+from gui.window.add_results import AddResults
+from gui.window.show_results import ShowResults
+from gui.window.set_team import ActualTeam
+from gui.window.help import Help
+from gui.window.settings import Settings
+
 from metadata import __author__, __version__
 from assets.random_texts import RANDOM_TEXT
 
@@ -118,7 +126,7 @@ class MainWindow(tk.Toplevel):
 
         # HELP and LANGUAGE ROW
         help_row = tk.Frame(self)
-        help_row.pack(fill="x", pady=20)
+        help_row.pack(fill="x", pady=(20, 0))
 
         help_row.columnconfigure(0, weight=1, uniform="group1")
         help_row.columnconfigure(1, weight=0)
@@ -147,6 +155,18 @@ class MainWindow(tk.Toplevel):
         help_button.config(width=20, cursor="hand2")
         ToolTip(help_button, f"{self.i18n.t("main_menu.help_info")}")
         help_button.grid(row=0, column=1)
+
+        # SETTINGS WINDOW
+        settings_button = tk.Button(
+            self,
+            text=self.i18n.t("main_menu.settings"),
+            relief="flat",
+            borderwidth=1,
+            #command=lambda: self._settings(lang=self.lang),
+        )
+        settings_button.config(width=20, cursor="hand2")
+        ToolTip(settings_button, self.i18n.t("main_menu.settings_info"))
+        settings_button.pack(pady=2)
 
         # BOTTOM INFO LABEL
         info_label = tk.Label(
@@ -210,37 +230,31 @@ class MainWindow(tk.Toplevel):
         ToolTip(exit_btn, f"{self.i18n.t("main_menu.exit_info")}")
 
     def _add_uma(self, lang):
-        from gui.window.add_uma import AddUma
         uma_window = AddUma(master=self, lang=self.lang, app_path=self.app_path)
         uma_window.focus_set()
         uma_window.grab_set()
 
     def _add_trial(self, app_path):
-        from gui.window.add_trial import AddTrial
         trial_window = AddTrial(master=self, app_path=app_path, lang=self.lang)
         trial_window.focus_set()
         trial_window.grab_set()
 
     def _add_results(self, app_path):
-        from gui.window.add_results import AddResults
         result_window = AddResults(master=self, app_path=app_path, lang=self.lang)
         result_window.focus_set()
         result_window.grab_set()
 
     def _show_results(self, app_path):
-        from gui.window.show_results import ShowResults
         show_results_window = ShowResults(master=self, app_path=app_path, lang=self.lang)
         show_results_window.focus_set()
         show_results_window.grab_set()
 
     def _set_actual_team(self, app_path, lang):
-        from gui.window.set_team import ActualTeam
         set_team_window = ActualTeam(master=self, app_path=app_path, lang=self.lang)
         set_team_window.focus_set()
         set_team_window.grab_set()
 
     def _help(self, lang):
-        from gui.window.help import Help
         help_window = Help(master=self, lang=self.lang)
         help_window.focus_set()
         help_window.grab_set()
@@ -249,6 +263,11 @@ class MainWindow(tk.Toplevel):
         lang_window = ask_lang(app_path)
         lang_window.focus_set()
         lang_window.grab_set()
+
+    def _settings(self, lang):
+        settings_window = Settings(master=self, lang=self.lang)
+        settings_window.focus_set()
+        settings_window.grab_set()
 
     def _open_url(self, html):
         webbrowser.open(html)
