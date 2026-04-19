@@ -12,8 +12,9 @@ from database.get_uma import (
     load_umas_by_trial,
     load_uma_result_in_trial)
 from database.get_team import load_team
-from database.get_trials import (load_trials, load_type_of_run)
+from database.get_trials import (load_trials, load_distances)
 from core.i18n import I18n
+from core.statistics import Statistics
 import numpy as np
 
 class ShowResults(tk.Toplevel):
@@ -23,11 +24,13 @@ class ShowResults(tk.Toplevel):
         self.app_path = app_path
         self.lang = lang
         self.i18n = I18n(language=lang)
+        self.stats = Statistics(self.app_path)
+
         self.title(f"{self.i18n.t("score_win.title")}")
         self.geometry("1000x800")
 
         self.uma_id = None
-        self.runtype_id = None
+        self.distance_id = None
         self.selected_trials = None
 
         self.act_sq = tk.BooleanVar(value=False)
@@ -39,12 +42,19 @@ class ShowResults(tk.Toplevel):
         self.refresh_uma_list()
 
     def _gui(self):
+        self.umas_frame()
+        self.distances_frame()
+        self.statistics_frame()
+        self.trials_frame()
+        self.refresh_uma_list()
 
+    def umas_frame(self):
         self.list_row = tk.Frame(self)
         self.list_row.pack(side="top", fill='x', padx=10, pady=10)
         self.list_row.columnconfigure(0, weight=1)
         self.list_row.columnconfigure(1, weight=1)
         self.list_row.columnconfigure(2, weight=1)
+        self.list_row.columnconfigure(3, weight=1)
 
         uma_list_frame = tk.Frame(self.list_row)
         uma_list_frame.grid(row=0, column=0, sticky="nw")
@@ -73,32 +83,31 @@ class ShowResults(tk.Toplevel):
         )
         self.uma_list_average.pack(anchor="w", pady=2)
 
-        self.refresh_uma_list()
+    def distances_frame(self):
+        distances_frame = tk.Frame(self.list_row)
+        distances_frame.grid(row=0, column=1, sticky="n")
 
-        type_run_frame = tk.Frame(self.list_row)
-        type_run_frame.grid(row=0, column=1, sticky="n")
-
-        self.type_run_title = tk.Label(
-            type_run_frame,
+        self.distances_title_label = tk.Label(
+            distances_frame,
             text=f"{self.i18n.t("score_win.rodzaje")}:",
             font=("Helvetica", 10)
         )
-        self.type_run_title.pack(anchor="w")
+        self.distances_title_label.pack(anchor="w")
 
-        self.type_run = tk.Listbox(
-            type_run_frame,
+        self.distances = tk.Listbox(
+            distances_frame,
             height=5,
-            width=30,
+            width=12,
             activestyle="dotbox",
             font="Helvetica",
         )
-        self.type_run.pack(anchor="w")
-        self.type_run.bind("<ButtonRelease-1>", self.on_runtype_click)
+        self.distances.pack(anchor="w")
+        self.distances.bind("<ButtonRelease-1>", self.on_distances_click)
 
         self.is_clicked = tk.Label(
-            type_run_frame,
+            distances_frame,
             text=f"{self.i18n.t("score_win.choose")}",
-            width=30,
+            width=22,
             font=("Helvetica", 10),
             relief="solid",
             borderwidth=1,
@@ -107,29 +116,98 @@ class ShowResults(tk.Toplevel):
         )
         self.is_clicked.pack(pady=5)
 
-        self.actual_squad = tk.Checkbutton(
-            type_run_frame,
+        self.actual_squad_btn = tk.Checkbutton(
+            distances_frame,
             text=f"{self.i18n.t("score_win.dotyczy")}",
-            width=30,
+            width=22,
             font=("Helvetica", 10),
             command=lambda: self._show_with_act_sq(self.act_sq, uma_ids=None),
             variable=self.act_sq,
         )
-        self.actual_squad.pack(pady=2)
+        self.actual_squad_btn.pack(pady=2)
 
-        self.close_this = tk.Button(
-            type_run_frame,
+        self.close_this_btn = tk.Button(
+            distances_frame,
             text=f"{self.i18n.t("score_win.back")}",
             relief="solid",
             borderwidth=1,
             command=lambda: self.quit()
         )
-        self.close_this.pack(pady=5)
+        self.close_this_btn.pack(pady=5)
 
-        self.run_type_show()
+        self.distances_show()
 
+    def statistics_frame(self):
+        statistics_frame = tk.Frame(self.list_row)
+        statistics_frame.grid(row=0, column=2, sticky="ns")
+
+        self.statistics_title_label = tk.Label(
+            statistics_frame,
+            text=f"{self.i18n.t('statistics.title')}:",
+            font=("Helvetica", 10),
+        )
+        self.statistics_title_label.pack(anchor="w")
+
+        all_tt_races = self.stats.all_tt_races()
+        self.all_tt_races_lbl = tk.Label(
+            statistics_frame,
+            text=f"{self.i18n.t('statistics.all_tt_races')}: {all_tt_races}",
+            font=("Helvetica", 8),
+        )
+        self.all_tt_races_lbl.pack(anchor="w")
+
+        all_tt_runs = self.stats.all_single_runs()
+        self.all_tt_runs_lbl = tk.Label(
+            statistics_frame,
+            text=f"{self.i18n.t('statistics.all_runs')}: {all_tt_runs}",
+            font=("Helvetica", 8),
+        )
+        self.all_tt_runs_lbl.pack(anchor="w")
+
+        all_days = self.stats.all_race_days()
+        self.all_days_lbl = tk.Label(
+            statistics_frame,
+            text=f"{self.i18n.t('statistics.all_days')}: {all_days}",
+            font=("Helvetica", 8),
+        )
+        self.all_days_lbl.pack(anchor="w")
+
+        percent_win = self.stats.win_percent()
+        self.percent_of_win = tk.Label(
+            statistics_frame,
+            text=f"{self.i18n.t('statistics.percent_win')}: {percent_win}%",
+            font=("Helvetica", 8),
+        )
+        self.percent_of_win.pack(anchor="w")
+
+        percent_second = self.stats.second_percent()
+        self.percent_of_2nd_places = tk.Label(
+            statistics_frame,
+            text=f"{self.i18n.t('statistics.percent_2nd')}: {percent_second}%",
+            font=("Helvetica", 8),
+        )
+        self.percent_of_2nd_places.pack(anchor="w")
+
+        percent_third = self.stats.third_percent()
+        self.percent_of_3rd_places = tk.Label(
+            statistics_frame,
+            text=f"{self.i18n.t('statistics.percent_3rd')}: {percent_third}%",
+            font=("Helvetica", 8),
+        )
+        self.percent_of_3rd_places.pack(anchor="w")
+
+        self.statistics_button = tk.Button(
+            statistics_frame,
+            text=f"{self.i18n.t('statistics.detailed')}",
+            relief="solid",
+            borderwidth=1,
+            command=lambda: self.statistics(),
+        )
+        self.statistics_button.pack(side="bottom", expand=True)
+
+    def trials_frame(self):
         trial_frame = tk.Frame(self.list_row)
-        trial_frame.grid(row=0, column=2, sticky="ne")
+        trial_frame.grid(row=0, column=3, sticky="ne")
 
         self.trial_title_label = tk.Label(
             trial_frame,
@@ -146,7 +224,7 @@ class ShowResults(tk.Toplevel):
             font="Helvetica",
         )
         self.trials.pack(anchor="w")
-        self.trials.bind("<ButtonRelease-1>", self.on_series_click)
+        self.trials.bind("<ButtonRelease-1>", self.on_trial_click)
         self.trials_show()
 
         initial_x = np.arange(0, 500)
@@ -202,37 +280,42 @@ class ShowResults(tk.Toplevel):
 
                 self.selected_trials = None
                 self.selected_uma = uma_id
-                self.selected_runtype = None
+                self.selected_distance = None
 
                 self.update_clicked(f"{self.i18n.t("score_win.chosen_uma")}: {self.selected_uma}")
             except (IndexError, ValueError) as e:
                 print(e)
 
-    def run_type_show(self):
+    def distances_show(self):
         try:
-            data = load_type_of_run(self.app_path)
-            self.type_run.delete(0, tk.END)
-            self.type_run.insert(tk.END, *data)
+            data = load_distances(self.app_path)
+            formatted = []
+            for row in data:
+                line = f"{row[0]}  | {row[1]}"
+                formatted.append(line)
+            data = formatted
+            self.distances.delete(0, tk.END)
+            self.distances.insert(tk.END, *data)
         except (IndexError, ValueError) as e:
             print(e)
 
-    def on_runtype_click(self, event):
-        selected_runtype = self.type_run.curselection()
-        if selected_runtype:
-            full_text = self.type_run.get(selected_runtype[0])
+    def on_distances_click(self, event):
+        selected_distance = self.distances.curselection()
+        if selected_distance:
+            full_text = self.distances.get(selected_distance[0])
             try:
                 self.uma_list_average.config(text="")
                 raw_id = full_text.split('|')
-                runtype_id = raw_id[0].strip()
-                runtype_id = int(runtype_id)
+                distance_id = raw_id[0].strip()
+                distance_id = int(distance_id)
 
                 self.selected_trials = None
                 self.selected_uma = None
-                self.selected_runtype = runtype_id
+                self.selected_distance = distance_id
 
-                self.update_clicked(f"{self.i18n.t("score_win.chosen_distance")}: {runtype_id}")
+                self.update_clicked(f"{self.i18n.t("score_win.chosen_distance")}: {distance_id}")
 
-                uma_ids = load_umas_by_distance(runtype_id, self.app_path)
+                uma_ids = load_umas_by_distance(distance_id, self.app_path)
                 uma_ids = self._show_with_act_sq(self.act_sq, uma_ids)
 
                 self._show_data_on_chart(uma_ids)
@@ -241,13 +324,18 @@ class ShowResults(tk.Toplevel):
 
     def trials_show(self):
         data = load_trials(self.app_path)
+        formatted = []
+        for row in data:
+            line = f"{row[0]}   | {row[1]} | {row[2]}"
+            formatted.append(line)
+        data = formatted
         self.trials.delete(0, tk.END)
         self.trials.insert(tk.END, *data)
 
-    def on_series_click(self, event):
-        selected_serie = self.trials.curselection()
-        if selected_serie:
-            full_text = self.trials.get(selected_serie[0])
+    def on_trial_click(self, event):
+        selected_trial = self.trials.curselection()
+        if selected_trial:
+            full_text = self.trials.get(selected_trial[0])
             try:
                 self.uma_list_average.config(text="")
                 raw_id = full_text.split('|')
@@ -255,7 +343,7 @@ class ShowResults(tk.Toplevel):
                 trial_id = int(trial_id)
 
                 self.selected_trials = trial_id
-                self.selected_runtype = None
+                self.selected_distance = None
                 self.selected_uma = None
 
                 self.update_clicked(f"{self.i18n.t("score_win.chosen_trial")}: {trial_id}")
@@ -337,6 +425,9 @@ class ShowResults(tk.Toplevel):
             synchronized_umas[unique_name] = sync_pos
 
         self.chart.update_data(sorted_timeline, synchronized_umas)
+
+    def statistics(self):
+        print("Statistics window. WIP")
 
     def update_clicked(self, text):
         self.is_clicked.config(text=text)

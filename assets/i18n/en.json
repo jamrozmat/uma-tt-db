@@ -140,5 +140,17 @@
         "summary1": "In the main menu, you will find a link to this project's\nGitHub repository. I encourage you to check it out, leave comments,\nand suggest fixes, changes, or new features!",
         "summary2": "I hope using this program proves fruitful and pleasant,\nbringing you success in your UmaMusume: Pretty Derby gameplay."
     },
-    "settings": "Settings"
+    "settings": {
+        "title": "Settings"
+    },
+    "statistics": {
+        "title": "Statistics",
+        "all_tt_races": "All TT Races",
+        "all_runs": "All single runs",
+        "all_days": "Count of days",
+        "percent_win": "Wins",
+        "percent_2nd": "Second places",
+        "percent_3rd": "Third places",
+        "detailed": "Detailed stats"
+    }
 }

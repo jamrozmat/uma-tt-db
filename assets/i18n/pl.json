@@ -142,5 +142,15 @@
     },
     "settings": {
         "title": "Ustawienia"
+    },
+    "statistics": {
+        "title": "Statystyki",
+        "all_tt_races": "Wszystkie wyścigi TT",
+        "all_runs": "Wszystkie poj. starty",
+        "all_days": "Liczba dni",
+        "percent_win": "Zwycięstw",
+        "percent_2nd": "Drugich miejsc",
+        "percent_3rd": "Trzecich miejsc",
+        "detailed": "Szczegółowe statystyki"
     }
 }

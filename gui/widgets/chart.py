@@ -57,6 +57,7 @@ class Chart(tk.Frame):
             self.x_indices = list(range(max_len))
 
         self.ax.clear()
+        self.ax.set_ylabel("Places", fontsize=7, fontweight='bold', labelpad=10)
         self.ax.set_ylim(0, 12)
         self.ax.invert_yaxis()
         self.ax.set_yticks(range(13))
@@ -118,7 +119,7 @@ class Chart(tk.Frame):
                             fontsize=8,
                             color='steelblue',
                             alpha=0.75,
-                            zorder=3,
+                            zorder=2,
                             clip_on=True,
                         )
                 self.ax2.set_ylabel('Score', fontsize=7, color='steelblue', labelpad=2)
@@ -148,7 +149,14 @@ class Chart(tk.Frame):
                 for name, values in self.y_data.items():
                     current_x = list(range(len(values)))
 
-                    line, = self.ax.plot(current_x, values, marker='o', markersize=3, label=str(name), linewidth=1.5, zorder=2)
+                    line, = self.ax.plot(
+                        current_x,
+                        values,
+                        marker='o',
+                        markersize=3,
+                        label=str(name),
+                        linewidth=1.5,
+                        zorder=3)
 
                     current_color = line.get_color()
                     def plot_medal(place, medal_color, size):
@@ -177,7 +185,7 @@ class Chart(tk.Frame):
                     self.ax.legend(loc='lower left', fontsize='small',
                                    ncol=2 if len(self.y_data) >5 else 1)
 
-        self.fig.subplots_adjust(left=0.05, right=0.95, top=0.9, bottom=0.25)
+        self.fig.subplots_adjust(left=0.07, right=0.95, top=0.9, bottom=0.25)
         self.update_view()
 
     def _set_x_limits(self, start_idx):
@@ -195,7 +203,7 @@ class Chart(tk.Frame):
             self.ax.xaxis.set_major_formatter(FixedFormatter([str(self.x_data[i]) for i in visible_indices]))
 
         self.ax.tick_params(axis='x', labelrotation=90, labelsize=8)
-        self.fig.subplots_adjust(left=0.05, right=0.95, top=0.9, bottom=0.25)
+        self.fig.subplots_adjust(left=0.07, right=0.95, top=0.9, bottom=0.25)
         self.canvas.draw_idle()
 
     def _on_scroll(self, *args):

@@ -7,7 +7,7 @@ from tkinter import messagebox
 from database.get_uma import (load_umas_by_id)
 from database.get_team import load_team
 from database.get_distances import get_distances
-from database.get_trials import load_trials_short
+from database.get_trials import load_trials
 from database.add_results import add_results_to_db
 
 from core.i18n import I18n
@@ -23,13 +23,19 @@ class AddResults(tk.Toplevel):
         self.geometry("520x750")
 
         self.team = load_team(app_path)
-        self.combo_trials = load_trials_short(app_path)
+        self.combo_trials = load_trials(app_path)
         self.distances = get_distances(app_path)
 
         self.entries = {}
         self.dist_frames = {}
         self.pos_entries = []
         self.score_entries = []
+
+        formatted_combo_trial_row = []
+        for row in self.combo_trials:
+            line = f"{row[0]}   |  {row[1]}  |  {row[2]}"
+            formatted_combo_trial_row.append(line)
+        self.combo_trials = formatted_combo_trial_row
 
         self._gui(app_path)
 
