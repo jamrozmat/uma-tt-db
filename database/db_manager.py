@@ -19,7 +19,9 @@ def pragma(app_path):
 
 def create_db(app_path):
     SQL = resource_path(f'uma-tt-db/assets/tt.sql')
+    SQL2 = resource_path(f'uma-tt-db/assets/tt_2.sql')
     sql_script = Path(SQL).read_text(encoding="utf-8")
+    sql2_script = Path(SQL2).read_text(encoding="utf-8")
 
     db_path = Path(app_path)/"uma.db"
     db_path.touch()
@@ -31,16 +33,23 @@ def create_db(app_path):
     version = cur.fetchone()
     version = version[0] if version else 0
 
-    if version < 1:
+    if version == 0:
         cur.executescript(sql_script)
         cur.execute("PRAGMA user_version = 1")
+        version = 1
         print("Database initialized to version 1.")
+
+    if version == 1:
+        cur.executescript(sql2_script)
+        cur.execute("PRAGMA user_version = 2")
+        version = 2
+        print("Database initialized to version 2.")
 
     # Protection against database incompatibility.
     # Database sourced from a newer version of the program.
     # !Must be updated when the database version changes.
-    # !Actual: 1
-    if version > 1:
+    # !Actual: 2
+    if version > 2:
         print("The database is too new!\n>Please, update the program!")
         con.close()
         sys.exit(1)
