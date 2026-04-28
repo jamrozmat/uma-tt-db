@@ -50,6 +50,9 @@
     "add_trial": {
         "title": "Dodawanie wyścigu TT",
         "info": "Wprowadź wyścig TT do bazy danych,\npodając jego datę i godzinę.",
+        "saved": "Zapisano.",
+        "required": "WYMAGANE",
+        "optional": "Opcjonalne",
         "date": "Wprowadź datę",
         "date_info": "Wprowadź datę w formacie: YYYY-MM-DD\nNie musisz wprowadzać myślników,\nzostaną dodane automatycznie.",
         "today_btn": "Dzisiaj",
@@ -59,6 +62,10 @@
         "hour_format_btn": "Wybierz format godziny.\nAby wybrać 'PM', wpisz 'p' po godzinie.\nAby wybrać 'AM', usuń 'P' w 'PM'.\nUstawienie to zostanie zapamiętane.",
         "check": "Nie czyść pola daty",
         "check_info": "Zaznacz, by nie czyścić pola daty po dodaniu wyścigu.\nOpcja ta zostanie zapamiętana.",
+        "points": "Łącznie punkty",
+        "rival": "Nick rywala",
+        "class": "Klasa",
+        "diff": "Trudność",
         "exit": "Wróć do menu",
         "add_trial_btn": "Dodaj wyścig TT"
     },
@@ -84,7 +91,8 @@
         "exit": "Wróć do menu",
         "save": "Zapisz wyniki",
         "error_title": "Błąd formatu",
-        "error": "Wartości muszą być liczbami całkowitymi!"
+        "error": "Wartości muszą być liczbami całkowitymi!",
+        "nothing": "Nie ma nic do dodania..."
     },
     "actual_team": {
         "title":"Aktualny skład",

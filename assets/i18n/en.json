@@ -50,6 +50,9 @@
     "add_trial": {
         "title": "Add Team Trials",
         "info": "Add a Team Trials to the database by entering\nits date and time.",
+        "saved": "Saved.",
+        "required": "REQUIRED",
+        "optional": "Optional",
         "date": "Enter date",
         "date_info": "Enter date in the format: YYYY-MM-DD\nNo need to enter dashes;\nthey are added automatically.",
         "today_btn": "Today",
@@ -59,6 +62,10 @@
         "hour_format_btn": "Select time format.\nTo select 'PM', type 'p' after the hour.\nTo select 'AM', remove 'P' from 'PM'.\nThis setting will be saved.",
         "check": "Don't clear Date field",
         "check_info": "Check this to keep the date field filled\nafter adding a trials.\nThis setting will be remembered.",
+        "points": "Points",
+        "rival": "Rival's nickname",
+        "class": "Class",
+        "diff": "Difficulty",
         "exit": "Back to menu",
         "add_trial_btn": "Add Trial"
     },
@@ -84,7 +91,8 @@
         "exit": "Back to menu",
         "save": "Add Results",
         "error_title": "Format Error",
-        "error": "Values must be integers!"
+        "error": "Values must be integers!",
+        "nothing": "Nothing to add..."
     },
     "actual_team": {
         "title":"Actual Team",

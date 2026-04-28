@@ -15,11 +15,21 @@ def load_distances(app_path):
     return rows
 
 def load_trials(app_path):
-    """Return reversed list with Team Trial Races ID, Date and Time from database."""
+    """
+    Return reversed list with Team Trial Races ID,
+    Date and Time, Rival Nickname and BOOLEAN is_added
+    from database.
+    """
     db_path = load_db_path(app_path)
     con = sqlite3.connect(db_path)
     cur = con.cursor()
-    cur.execute("SELECT Trial_ID, Trial_Date, Trial_Time FROM Trials ORDER BY Trial_ID DESC")
+    sql = """
+        SELECT t.Trial_ID, t.Trial_Date, t.Trial_Time, r.Rival_Nickname, t.is_added
+        FROM Trials T
+        LEFT JOIN Rivals r ON t.Rival_ID = r.Rival_ID
+        ORDER BY t.Trial_ID Desc
+        """
+    cur.execute(sql)
     rows = cur.fetchall()
     con.close()
     return rows
@@ -97,3 +107,23 @@ def percent_of_3rd(app_path) -> float:
     con.close()
     if percent:
         return round(percent, 2)
+
+def load_class(app_path) -> list:
+    """Return the all classes (ID and Name) from Classes table."""
+    db_path = load_db_path(app_path)
+    con = sqlite3.connect(db_path)
+    cur = con.cursor()
+    cur.execute("SELECT Class_ID, Class_Name FROM Classes")
+    rows = cur.fetchall()
+    con.close()
+    return rows
+
+def load_difficulty(app_path) -> list:
+    """Return the all difficulties (ID and Name) from Trial_Difficulty table."""
+    db_path = load_db_path(app_path)
+    con = sqlite3.connect(db_path)
+    cur = con.cursor()
+    cur.execute("SELECT Difficulty_ID, Difficulty_Name FROM Trial_Difficulty")
+    rows = cur.fetchall()
+    con.close()
+    return rows
