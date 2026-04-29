@@ -13,7 +13,15 @@ Program works on:
 
 ## Installing
 
-This program is provided as source code. Installation steps vary depending on your operating system:
+You can download the binary (Linux) or .exe (Windows) from the Releases section. Simply open this file.
+
+To run the binary on Linux, you need to grant execute permission first:
+
+`chmod +x uma-tt-db`
+
+`./uma-tt-db`
+
+This program is also provided as source code. Installation steps vary depending on your operating system:
 
 <details>
 <summary><b>Linux:</b></summary>
@@ -41,6 +49,8 @@ Start the program:
 
 <details>
 <summary><b>Windows:</b></summary>
+
+Quick option: Download uma-tt-db.exe from Releases, OR:
 
 Download and install **Git** from the official website: [link](https://git-scm.com/install/windows)
 

@@ -27,7 +27,7 @@ jobs:
         run: pip install pyinstaller -r requirements.txt
 
       - name: Build exe
-        run: pyinstaller --onefile --windowed --name uma-tt-db --add-data "gui;gui" --add-data "database;database" --add-data "core;core" --add-data "assets;assets" --add-data "setup;setup" uma.py
+        run: pyinstaller uma-tt-db.spec
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -51,7 +51,7 @@ jobs:
         run: pip install pyinstaller -r requirements.txt
 
       - name: Build binary
-        run: pyinstaller --onefile --name uma-tt-db --add-data "gui:gui" --add-data "database:database" --add-data "core:core" --add-data "assets:assets" --add-data "setup:setup" uma.py
+        run: pyinstaller  uma-tt-db.spec
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:

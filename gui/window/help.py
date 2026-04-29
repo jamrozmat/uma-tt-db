@@ -51,8 +51,8 @@ class Help(tk.Toplevel):
         nav_bar.pack(side="bottom", fill="x", pady=10)
 
         self.btn_prev = tk.Button(
-            nav_bar, 
-            text=f"< {self.i18n.t("help.previous")}", 
+            nav_bar,
+            text=f"< {self.i18n.t("help.previous")}",
             command=self.go_prev,
             )
         self.btn_prev.pack(side="left", padx=20)
@@ -189,7 +189,7 @@ class AddUma(tk.Frame):
         tk.Label(self, text=f"{self.i18n.t("help.first")}").pack(pady=20)
         tk.Label(self, text=f"{self.i18n.t("help.first2")}").pack()
         tk.Label(self, text=f"{self.i18n.t("help.first3")}").pack()
-        adduma_file = resource_path(f'uma-tt-db/assets/img/add_uma.png')
+        adduma_file = resource_path(f'assets/img/add_uma.png')
         adduma_img = Image.open(str(adduma_file))
         self.add_uma_img = ImageTk.PhotoImage(adduma_img)
         add_uma = tk.Label(self, image=self.add_uma_img)
@@ -210,7 +210,7 @@ class SetTeam(tk.Frame):
         tk.Label(self, text=f"{self.i18n.t("help.set1")}").pack(pady=20)
         tk.Label(self, text=f"{self.i18n.t("help.set2")}").pack()
         tk.Label(self, text=f"{self.i18n.t("help.set3")}").pack()
-        setsquad_file = resource_path(f'uma-tt-db/assets/img/set_squad.png')
+        setsquad_file = resource_path(f'assets/img/set_squad.png')
         squad_img = Image.open(str(setsquad_file))
         new_size = (320, 320)
         squad_img = squad_img.resize(new_size, Image.LANCZOS)
@@ -235,7 +235,7 @@ class AddTrial(tk.Frame):
         tk.Label(self, text=f"{self.i18n.t("help.trial3")}").pack()
         tk.Label(self, text=f"{self.i18n.t("help.trial4")}").pack()
         tk.Label(self, text=f"{self.i18n.t("help.trial5")}").pack()
-        add_tt_file = resource_path(f'uma-tt-db/assets/img/add_tt.png')
+        add_tt_file = resource_path(f'assets/img/add_tt.png')
         add_tt_img = Image.open(str(add_tt_file))
         self.add_tt_img = ImageTk.PhotoImage(add_tt_img)
         add_tt = tk.Label(self, image=self.add_tt_img)
@@ -254,7 +254,7 @@ class AddResults(tk.Frame):
                 font=("Arial", 18, "bold")
                 ).pack(pady=50)
         tk.Label(self, text=f"{self.i18n.t("help.results1")}").pack(pady=20)
-        addresults_file = resource_path(f'uma-tt-db/assets/img/add_results.png')
+        addresults_file = resource_path(f'assets/img/add_results.png')
         addresults_img = Image.open(str(addresults_file))
         new_size = (300, 300)
         addresults_img = addresults_img.resize(new_size, Image.LANCZOS)
@@ -276,7 +276,7 @@ class ViewResults(tk.Frame):
             font=("Arial", 18, "bold")
             ).pack(pady=10)
         tk.Label(self, text=f"{self.i18n.t("help.view1")}").pack()
-        view_file = resource_path(f'uma-tt-db/assets/img/view_results.png')
+        view_file = resource_path(f'assets/img/view_results.png')
         view_img = Image.open(str(view_file))
         new_size = (340, 280)
         view_img = view_img.resize(new_size, Image.LANCZOS)

@@ -9,4 +9,4 @@ def resource_path(relative: str):
     else:
         base = Path(__file__).resolve().parents[2]
 
-    return base / relative
+    return base / 'uma-tt-db' / relative

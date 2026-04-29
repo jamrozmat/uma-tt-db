@@ -19,8 +19,8 @@ def pragma(app_path):
     return version
 
 def create_db(app_path):
-    SQL = resource_path(f'uma-tt-db/assets/tt.sql')
-    SQL2 = resource_path(f'uma-tt-db/assets/tt_2.sql')
+    SQL = resource_path(f'assets/tt.sql')
+    SQL2 = resource_path(f'assets/tt_2.sql')
     sql_script = Path(SQL).read_text(encoding="utf-8")
     sql2_script = Path(SQL2).read_text(encoding="utf-8")
 

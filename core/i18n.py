@@ -21,7 +21,7 @@ class I18n:
         self.translations = self._load_translations(language)
 
     def _load_translations(self, language: str):
-        path = resource_path(f'uma-tt-db/assets/i18n/{language}.json')
+        path = resource_path(f'assets/i18n/{language}.json')
         #if not path.exists():
         with open(path, 'r', encoding='utf-8') as f:
             return json.load(f)
