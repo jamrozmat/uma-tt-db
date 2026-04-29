@@ -34,6 +34,7 @@
         "author": "Autor",
         "version": "Wersja programu",
         "license_info": "Kliknij, by przeczytać licencję na oficjalnej stronie.",
+        "local_files": "Kliknij, by przejrzeć pliki lokalne.",
         "github_info": "Kliknij, by odwiedzić stronę programu.",
         "exit": "Wyjście",
         "exit_info": "Zamknij program."

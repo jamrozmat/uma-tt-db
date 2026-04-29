@@ -3,6 +3,8 @@
 import tkinter as tk
 import webbrowser
 import random
+import os
+import subprocess
 
 from core.i18n import I18n
 from core.tooltip import ToolTip
@@ -22,13 +24,14 @@ from metadata import __author__, __version__
 from assets.random_texts import RANDOM_TEXT
 
 class MainWindow(tk.Toplevel):
-    def __init__(self, app_path, lang, __app_name__, master=None):
+    def __init__(self, app_path, system, lang, __app_name__, master=None):
         super().__init__(master)
         self.master = master
         self.title(__app_name__)
         self.geometry('600x630')
 
         self.app_path = app_path
+        self.system = system
         self.lang = lang
         self.i18n = I18n(language=lang)
 
@@ -37,6 +40,13 @@ class MainWindow(tk.Toplevel):
         self._qui()
 
     def _qui(self):
+        self._logo()
+        self._version()
+        self._random_text()
+        self._buttons()
+        self._info_panel_buttons()
+
+    def _logo(self):
         # LOGO
         # Due to the lack of suitable CC0-licensed graphics,
         # I cannot place anything in this section.
@@ -48,6 +58,7 @@ class MainWindow(tk.Toplevel):
             fg="gray")
         logo.pack(side="top", anchor="n", pady=10)
 
+    def _version(self):
         # DATABASE PRAGMA
         version = pragma(self.app_path)
         pragma_text = f"{self.i18n.t("main_menu.pragma")} {version}"
@@ -55,6 +66,7 @@ class MainWindow(tk.Toplevel):
         ToolTip(pragma_label, f"{self.i18n.t("main_menu.pragma_info")}")
         pragma_label.pack(side="top", anchor="nw", padx=10, pady=40)
 
+    def _random_text(self):
         # GOLD RANDOM TEXT
         parent_bg = self.master.cget('bg') if hasattr(self, 'master') and self.master else "#d9d9d9"
         self.splash_canvas = tk.Canvas(self, bg=parent_bg, highlightthickness=0,
@@ -64,6 +76,7 @@ class MainWindow(tk.Toplevel):
         text = random.choice(RANDOM_TEXT)
         self._draw_outlined_text(self.splash_canvas, 350, 25, text)
 
+    def _buttons(self):
         # ADD NEW UMA
         add_uma_button = tk.Button(
             self,
@@ -168,6 +181,7 @@ class MainWindow(tk.Toplevel):
         ToolTip(settings_button, self.i18n.t("main_menu.settings_info"))
         settings_button.pack(pady=2)
 
+    def _info_panel_buttons(self):
         # BOTTOM INFO LABEL
         info_label = tk.Label(
             self,
@@ -217,6 +231,17 @@ class MainWindow(tk.Toplevel):
         ToolTip(github_lbl, f"{self.i18n.t("main_menu.github_info")}")
         github_lbl.bind("<Button-1>", lambda event: self._open_url(github_url))
         github_lbl.pack(side="right")
+
+        local_files = tk.Label(
+            info_label,
+            text="🗀", #📂
+            anchor="w",
+            bg="snow",
+            cursor="hand2",
+        )
+        ToolTip(local_files, self.i18n.t("main_menu.local_files"))
+        local_files.bind("<Button-1>", lambda event: self._open_local_files())
+        local_files.pack(side="right", padx=5)
 
         exit_btn = tk.Button(
             self,
@@ -268,6 +293,18 @@ class MainWindow(tk.Toplevel):
         settings_window = Settings(master=self, lang=self.lang)
         settings_window.focus_set()
         settings_window.grab_set()
+
+    def _open_local_files(self):
+        path = self.app_path
+        system = self.system
+        if not os.path.exists(path):
+            print(f"Path {path} doesn't exists.")
+            return
+
+        if system == 'Windows':
+            os.startfile(path)
+        else:
+            subprocess.Popen(["xdg-open", path])
 
     def _open_url(self, html):
         webbrowser.open(html)

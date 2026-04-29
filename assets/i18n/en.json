@@ -34,6 +34,7 @@
         "author": "Author",
         "version": "Program Version",
         "license_info": "Click to read the GNU GPL license\non the official website.",
+        "local_files": "Click to view local files.",
         "github_info": "Click to visit the GitHub program repository.",
         "exit": "Exit",
         "exit_info": "Close the program."

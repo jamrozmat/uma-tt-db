@@ -46,7 +46,7 @@ def start():
     lang = lang_check(app_path)
     root = tk.Tk()
     root.withdraw()
-    MainWindow(app_path, lang, __app_name__, master=root)
+    MainWindow(app_path, system, lang, __app_name__, master=root)
     root.mainloop()
 
 if __name__ == '__main__':
